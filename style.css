@@ -1,0 +1,387 @@
+/* ===============================================
+   TECH NOTES - MAIN STYLESHEET
+   GitHub-inspired dark theme
+   =============================================== */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #f0f6fc;
+    background-color: #0d1117;
+    padding: 40px 20px;
+}
+
+/* ===============================================
+   HEADER & NAVIGATION
+   =============================================== */
+
+header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #f0f6fc;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+nav {
+    margin-top: 0;
+}
+
+nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+nav a:hover {
+    color: #79c0ff;
+    text-decoration: underline;
+}
+
+nav a.active {
+    color: #79c0ff;
+    font-weight: 500;
+}
+
+/* ===============================================
+   MAIN CONTENT
+   =============================================== */
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-title h2, .intro h2 {
+    color: #f0f6fc;
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.page-title p, .intro p {
+    color: #8b949e;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ===============================================
+   NOTES SECTION STYLES
+   =============================================== */
+
+/* Stats dashboard */
+.stats {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    color: #8b949e;
+    font-size: 0.85rem;
+}
+
+.stat-number {
+    display: block;
+    color: #58a6ff;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Category filter */
+.category-filter {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-filter select {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #f0f6fc;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.category-filter select:focus {
+    outline: none;
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+/* Notes list */
+.notes-list {
+    list-style: none;
+}
+
+.note-item {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.note-item:hover {
+    border-color: #58a6ff;
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.note-title {
+    color: #58a6ff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    flex: 1;
+    min-width: 250px;
+    transition: color 0.2s ease;
+}
+
+.note-title:hover {
+    color: #79c0ff;
+    text-decoration: underline;
+}
+
+.note-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #8b949e;
+    flex-shrink: 0;
+}
+
+.note-date {
+    white-space: nowrap;
+}
+
+.category-tag {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: #58a6ff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.note-preview {
+    color: #8b949e;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ===============================================
+   CONTACT FORM STYLES
+   =============================================== */
+
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-intro {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.contact-intro h3 {
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.contact-intro p {
+    color: #8b949e;
+    line-height: 1.6;
+}
+
+.contact-form {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #f0f6fc;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #f0f6fc;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #7d8590;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.submit-btn {
+    background: #238636;
+    color: #fff;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+}
+
+.submit-btn:hover {
+    background: #2ea043;
+}
+
+.submit-btn:disabled {
+    background: #484f58;
+    color: #7d8590;
+    cursor: not-allowed;
+}
+
+.contact-footer {
+    text-align: center;
+    color: #8b949e;
+    font-size: 0.85rem;
+    padding: 0 30px;
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    nav a {
+        margin: 0 15px;
+        font-size: 0.9rem;
+    }
+    
+    .note-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .note-meta {
+        flex-wrap: wrap;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .contact-form {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    nav a {
+        margin: 0 10px;
+        font-size: 0.85rem;
+    }
+    
+    .note-title {
+        min-width: auto;
+    }
+}
