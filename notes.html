@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - Tech Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Tech Notes</h1>
+        <nav>
+            <a href="index.html">About</a>
+            <a href="notes.html" class="active">Notes</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-title">
+            <h2>Notes</h2>
+            <p>Technical documentation, tutorials, and quick references</p>
+        </div>
+
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    Total Notes
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    Categories
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    This Month
+                </div>
+            </div>
+        </div>
+
+        <div class="category-filter">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="operating-systems">Operating Systems</option>
+                <option value="networking">Networking</option>
+                <option value="software">Software</option>
+                <option value="security">Security</option>
+                <option value="scripts">Scripts</option>
+                <option value="hardware">Hardware</option>
+            </select>
+        </div>
+
+        <ul class="notes-list" id="notesList">
+            <li class="note-item" data-category="software">
+                <div class="note-header">
+                    <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
+                    <div class="note-meta">
+                        <span class="note-date">Aug 27, 2025</span>
+                        <span class="category-tag">software</span>
+                    </div>
+                </div>
+                <div class="note-preview">
+                    First post on the new Tech Notes site. Overview of what to expect and how the site is organized.
+                </div>
+            </li>
+
+            <li class="note-item" data-category="scripts">
+                <div class="note-header">
+                    <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
+                    <div class="note-meta">
+                        <span class="note-date">Aug 27, 2025</span>
+                        <span class="category-tag">scripts</span>
+                    </div>
+                </div>
+                <div class="note-preview">
+                    Essential bash scripting concepts including variables, loops, and functions for automation tasks.
+                </div>
+            </li>
+
+            <li class="note-item" data-category="networking">
+                <div class="note-header">
+                    <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
+                    <div class="note-meta">
+                        <span class="note-date">Aug 27, 2025</span>
+                        <span class="category-tag">networking</span>
+                    </div>
+                </div>
+                <div class="note-preview">
+                    Basic home networking setup including router configuration, port forwarding, and security considerations.
+                </div>
+            </li>
+        </ul>
+    </main>
+
+    <script>
+        // Category filtering functionality
+        document.getElementById('categoryFilter').addEventListener('change', function() {
+            const selectedCategory = this.value;
+            const noteItems = document.querySelectorAll('.note-item');
+            
+            noteItems.forEach(item => {
+                if (selectedCategory === '' || item.dataset.category === selectedCategory) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
