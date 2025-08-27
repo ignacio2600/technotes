@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Tech Notes</title>
-
   <!-- ===========================
        INLINE STYLES
        =========================== -->
@@ -17,12 +16,10 @@
       text-align: center;
       margin: 1em 0 0.5em 0;
     }
-
     header h1 {
       font-size: 2.5rem;
       margin: 0 0 0.2em 0; /* tighten bottom spacing */
     }
-
     /* ====================================== 
        2. NAVIGATION MENU
        ====================================== */
@@ -30,7 +27,6 @@
       text-align: center;
       margin: 0 0 1.2em 0; /* tiny gap under title */
     }
-
     nav a {
       text-decoration: none;
       font-size: 0.95rem;   /* slightly smaller */
@@ -39,12 +35,10 @@
       margin: 0 0.8em;
       transition: color 0.2s ease-in-out;
     }
-
     nav a:hover {
       color: #000;          /* darker on hover */
       text-decoration: underline;
     }
-
     /* ====================================== 
        3. MAIN CONTENT
        ====================================== */
@@ -55,12 +49,10 @@
       line-height: 1.6;
       text-align: center; /* center all content */
     }
-
     main h2 {
       margin-top: 2em;
       margin-bottom: 0.3em;
     }
-
     /* ====================================== 
        4. DIVIDER STYLE
        ====================================== */
@@ -70,47 +62,25 @@
       margin: 0 auto 1.5em auto;
       width: 60%; /* shorter line for visual balance */
     }
-
     /* ====================================== 
-       5. CONTACT FORM
+       5. CONTACT BUTTON STYLE
        ====================================== */
-    form {
-      max-width: 400px;
-      margin: 0 auto;
-      text-align: left;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 0.5em;
-      margin-top: 0.3em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 1rem;
-    }
-
-    button {
-      margin-top: 1em;
-      padding: 0.5em 1.5em;
+    .contact-btn {
+      display: inline-block;
+      padding: 0.8em 2em;
       background: #333;
       color: #fff;
-      border: none;
+      text-decoration: none;
       border-radius: 4px;
-      cursor: pointer;
+      margin-top: 1em;
+      transition: background 0.2s ease-in-out;
     }
-
-    button:hover {
+    .contact-btn:hover {
       background: #000;
     }
   </style>
 </head>
 <body>
-
   <!-- ===========================
        SITE HEADER + NAV
        =========================== -->
@@ -119,10 +89,9 @@
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
-
   <!-- ===========================
        MAIN CONTENT
        =========================== -->
@@ -132,28 +101,17 @@
       <hr>
       <p>Welcome to Tech Notes, a space where I document my journey through various technologies, share tutorials, and showcase personal projects.</p>
     </section>
-
     <section id="projects">
       <h2>Projects</h2>
       <hr>
       <p>Here you'll find a collection of projects I've worked on, ranging from system installations to scripting and database management.</p>
     </section>
-
     <section id="contact">
       <h2>Contact</h2>
       <hr>
-      <!-- CONTACT FORM -->
-      <form action="https://formspree.io/f/mdklkkaa" method="POST" data-sf-redirect="thankyou.html">
-        <label for="email">Your email:</label><br>
-        <input type="email" name="email" id="email" required><br><br>
-
-        <label for="message">Your message:</label><br>
-        <textarea name="message" id="message" rows="5" required></textarea><br><br>
-
-        <button type="submit">Send</button>
-      </form>
+      <p>Have questions about my projects or want to collaborate? I'd love to hear from you!</p>
+      <a href="contact.html" class="contact-btn">Get In Touch</a>
     </section>
   </main>
-
 </body>
 </html>
