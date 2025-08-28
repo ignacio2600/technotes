@@ -4,104 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notes - Tech Notes</title>
-<link rel="stylesheet" href="style.css">
-
 <style>
 /* ======================================
-   1. PAGE TITLE STYLING
+   1. PAGE STYLING
    ====================================== */
-.page-title {
-    text-align: left;
+body {
     font-family: monospace;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* ======================================
-   2. NOTES HEADER (Title + Category Dropdown)
-   ====================================== */
-.notes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: monospace;
-    margin-bottom: 20px;
-}
-
-.notes-header h2 {
+    background: #000;
+    color: #0f0;
+    padding: 30px;
     margin: 0;
-    font-weight: bold;
-}
-
-.notes-header select {
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 16px;
 }
 
 /* ======================================
-   3. NOTES LIST GRID
+   2. HEADER
+   ====================================== */
+.header-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header-container h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header-container nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #0f0;
+    font-weight: bold;
+}
+
+/* ======================================
+   3. NOTES LIST
    ====================================== */
 .notes-list {
-    display: grid;
-    grid-template-columns: 120px 1fr 200px 120px; /* Date | Note | Labels | Category */
-    gap: 10px;
-    align-items: center;
-    font-family: monospace;
-    font-weight: bold;
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .note-item {
-    display: contents; /* children take the grid columns */
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+    line-height: 1.5em;
 }
 
+.note-item span,
+.note-item a {
+    margin-right: 15px;
+    white-space: nowrap;
+}
+
+/* Column widths */
 .note-date {
-    color: #0f0;
-    font-size: 16px;
+    flex: 0 0 100px;
 }
 
 .note-title {
+    flex: 1 1 200px;
     text-decoration: none;
-    color: inherit;
-    font-size: 16px;
+    color: #0f0;
 }
 
-.note-title:hover {
-    color: #ff0;
+.note-labels {
+    flex: 1 1 200px;
 }
 
 .note-labels a {
-    font-style: italic;
     color: #0f0;
     text-decoration: none;
     margin-right: 4px;
+    cursor: pointer;
 }
 
-.note-labels a:hover {
-    color: #ff0;
+.note-category {
+    flex: 0 0 120px;
 }
 
 .note-category a {
     color: #0f0;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.note-category a:hover {
+/* Sort link above category column */
+.sort-link {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+/* Hover effects */
+.note-title:hover,
+.note-labels a:hover,
+.note-category a:hover,
+.sort-link:hover {
     color: #ff0;
 }
 
-/* ======================================
-   4. RESPONSIVE STYLING
-   ====================================== */
-@media (max-width: 700px) {
-    .notes-list {
-        grid-template-columns: 1fr; /* stack all columns on small screens */
+/* Responsive for small screens */
+@media (max-width: 600px) {
+    .note-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
-    .note-item > * {
-        display: block;
-        margin: 2px 0;
+    .note-date,
+    .note-title,
+    .note-labels,
+    .note-category {
+        flex: 1 1 100%;
+        margin-right: 0;
     }
 }
 </style>
@@ -109,106 +125,121 @@
 <body>
 
 <!-- ======================================
-     5. HEADER AND NAVIGATION
+     HEADER
      ====================================== -->
-<header>
-<h1 style="text-align:left; font-family: monospace;">Tech Notes</h1>
-<nav style="text-align:left; font-family: monospace;">
-    <a href="index.html">About</a>
-    <a href="notes.html" class="active">Notes</a>
-    <a href="contact.html">Contact</a>
-</nav>
-</header>
+<div class="header-container">
+    <h1>Tech Notes</h1>
+    <nav>
+        <a href="index.html">About</a>
+        <a href="notes.html">Notes</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</div>
 
 <!-- ======================================
-     6. MAIN CONTENT
+     NOTES LIST
      ====================================== -->
-<main>
-    <!-- Page Title -->
-    <div class="page-title">
-        <h2>Notes</h2>
-        <p>Technical documentation, tutorials, and quick references</p>
-    </div>
-
-    <!-- Notes List -->
-    <ul class="notes-list" id="notesList">
-
-        <!-- Note 1 -->
-        <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
-            <span class="note-labels">
-                <a href="#" class="filter-label" data-label="install">install</a>,
-                <a href="#" class="filter-label" data-label="openbsd">openbsd</a>,
-                <a href="#" class="filter-label" data-label="tutorial">tutorial</a>
-            </span>
-            <span class="note-category"><a href="#" class="filter-category" data-category="Software">Software</a></span>
-        </li>
-
-        <!-- Note 2 -->
-        <li class="note-item" data-category="Software" data-labels="intro,overview">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
-            <span class="note-labels">
-                <a href="#" class="filter-label" data-label="intro">intro</a>,
-                <a href="#" class="filter-label" data-label="overview">overview</a>
-            </span>
-            <span class="note-category"><a href="#" class="filter-category" data-category="Software">Software</a></span>
-        </li>
-
-        <!-- Note 3 -->
-        <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
-            <span class="note-labels">
-                <a href="#" class="filter-label" data-label="bash">bash</a>,
-                <a href="#" class="filter-label" data-label="scripting">scripting</a>,
-                <a href="#" class="filter-label" data-label="automation">automation</a>
-            </span>
-            <span class="note-category"><a href="#" class="filter-category" data-category="Scripts">Scripts</a></span>
-        </li>
-
-        <!-- Note 4 -->
-        <li class="note-item" data-category="Networking" data-labels="networking,router,security">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
-            <span class="note-labels">
-                <a href="#" class="filter-label" data-label="networking">networking</a>,
-                <a href="#" class="filter-label" data-label="router">router</a>,
-                <a href="#" class="filter-label" data-label="security">security</a>
-            </span>
-            <span class="note-category"><a href="#" class="filter-category" data-category="Networking">Networking</a></span>
-        </li>
-
-    </ul>
-</main>
+<ul class="notes-list">
+    <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
+        <span class="note-date">2025-08-27</span>
+        <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
+        <span class="note-labels">
+            <a data-label="install">install</a>, 
+            <a data-label="openbsd">openbsd</a>, 
+            <a data-label="tutorial">tutorial</a>
+        </span>
+        <span class="note-category">
+            <span class="sort-link">Sort ▼</span>
+            <a data-category="Software">Software</a>
+        </span>
+    </li>
+    <li class="note-item" data-category="Software" data-labels="intro,overview">
+        <span class="note-date">2025-08-27</span>
+        <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
+        <span class="note-labels">
+            <a data-label="intro">intro</a>, 
+            <a data-label="overview">overview</a>
+        </span>
+        <span class="note-category">
+            <span class="sort-link">Sort ▼</span>
+            <a data-category="Software">Software</a>
+        </span>
+    </li>
+    <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
+        <span class="note-date">2025-08-27</span>
+        <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
+        <span class="note-labels">
+            <a data-label="bash">bash</a>, 
+            <a data-label="scripting">scripting</a>, 
+            <a data-label="automation">automation</a>
+        </span>
+        <span class="note-category">
+            <span class="sort-link">Sort ▼</span>
+            <a data-category="Scripts">Scripts</a>
+        </span>
+    </li>
+    <li class="note-item" data-category="Networking" data-labels="networking,router,security">
+        <span class="note-date">2025-08-27</span>
+        <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
+        <span class="note-labels">
+            <a data-label="networking">networking</a>, 
+            <a data-label="router">router</a>, 
+            <a data-label="security">security</a>
+        </span>
+        <span class="note-category">
+            <span class="sort-link">Sort ▼</span>
+            <a data-category="Networking">Networking</a>
+        </span>
+    </li>
+</ul>
 
 <!-- ======================================
-     7. FILTER SCRIPT
+     SCRIPT FOR LABEL/ CATEGORY FILTER AND SORT
      ====================================== -->
 <script>
-// Label click filtering
-document.querySelectorAll('.filter-label').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const label = this.dataset.label.toLowerCase();
-        document.querySelectorAll('.note-item').forEach(item => {
-            const labels = item.dataset.labels.toLowerCase();
-            item.style.display = labels.includes(label) ? 'flex' : 'none';
+const notes = Array.from(document.querySelectorAll('.note-item'));
+
+// Filter by label
+document.querySelectorAll('.note-labels a').forEach(label => {
+    label.addEventListener('click', e => {
+        const value = e.target.dataset.label;
+        notes.forEach(note => {
+            const noteLabels = note.dataset.labels.split(',');
+            note.style.display = noteLabels.includes(value) ? 'flex' : 'none';
         });
     });
 });
 
-// Category click filtering
-document.querySelectorAll('.filter-category').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const category = this.dataset.category.toLowerCase();
-        document.querySelectorAll('.note-item').forEach(item => {
-            item.style.display = item.dataset.category.toLowerCase() === category ? 'flex' : 'none';
+// Filter by category
+document.querySelectorAll('.note-category a').forEach(cat => {
+    cat.addEventListener('click', e => {
+        const value = e.target.dataset.category;
+        notes.forEach(note => {
+            note.style.display = (note.dataset.category === value) ? 'flex' : 'none';
         });
+    });
+});
+
+// Sort by category
+document.querySelectorAll('.sort-link').forEach(sort => {
+    sort.addEventListener('click', () => {
+        // Simple toggle between A-Z and Z-A
+        const isAZ = sort.textContent.includes('▼');
+        sort.textContent = isAZ ? 'Sort ▲' : 'Sort ▼';
+
+        const sortedNotes = notes.slice().sort((a, b) => {
+            const catA = a.dataset.category.toUpperCase();
+            const catB = b.dataset.category.toUpperCase();
+            if (isAZ) return catA > catB ? 1 : -1;
+            else return catA < catB ? 1 : -1;
+        });
+
+        const list = document.querySelector('.notes-list');
+        list.innerHTML = '';
+        sortedNotes.forEach(n => list.appendChild(n));
     });
 });
 </script>
+
 </body>
 </html>
