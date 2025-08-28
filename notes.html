@@ -6,29 +6,61 @@
     <title>Notes - Tech Notes</title>
     <link rel="stylesheet" href="style.css">
 
-    /* ======================================
-       1. NOTE HEADER STYLING
-       ====================================== */
     <style>
-        .note-header {
+        /* ======================================
+           1. NOTE HEADER STYLING WITH FIXED COLUMNS
+           ====================================== */
+        .note-item {
+            border-bottom: 1px solid #444;
+            padding: 6px 0;
+            font-family: monospace;
             font-weight: bold;
-            margin-bottom: 10px;
-            font-family: monospace; /* tech-style look */
         }
 
-        .note-header span {
-            color: #0f0; /* optional color for date and category */
+        .note-header {
+            display: flex;
+        }
+
+        /* Fixed width columns */
+        .note-header .note-date {
+            width: 120px;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 1em;
         }
 
         .note-header .note-title {
+            width: 300px;
+            padding-left: 5px;
+        }
+
+        .note-header .category-tag {
+            width: 120px;
+            padding-left: 5px;
+            text-align: right;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 1em;
+        }
+
+        /* Add dividers automatically */
+        .note-header .note-date::after {
+            content: " |";
+            padding-right: 5px;
+        }
+
+        .note-header .note-title::after {
+            content: " |";
+            padding-right: 5px;
+        }
+
+        .note-header .note-title a {
             text-decoration: none;
             color: inherit;
         }
 
-        /* Optional: spacing between notes */
-        .note-item {
-            padding: 8px 0;
-            border-bottom: 1px solid #444;
+        .note-header .note-title a:hover {
+            color: #0f0;
         }
     </style>
 </head>
@@ -100,8 +132,8 @@
             <!-- Note 1 -->
             <li class="note-item" data-category="software">
                 <div class="note-header">
-                    <span class="note-date">2025-08-27</span> | 
-                    <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a> | 
+                    <span class="note-date">2025-08-27</span>
+                    <span class="note-title"><a href="notes/welcome-to-tech-notes.html">Welcome to Tech Notes</a></span>
                     <span class="category-tag">Software</span>
                 </div>
             </li>
@@ -109,8 +141,8 @@
             <!-- Note 2 -->
             <li class="note-item" data-category="scripts">
                 <div class="note-header">
-                    <span class="note-date">2025-08-27</span> | 
-                    <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a> | 
+                    <span class="note-date">2025-08-27</span>
+                    <span class="note-title"><a href="notes/bash-basics.html">Bash Scripting Basics</a></span>
                     <span class="category-tag">Scripts</span>
                 </div>
             </li>
@@ -118,8 +150,8 @@
             <!-- Note 3 -->
             <li class="note-item" data-category="networking">
                 <div class="note-header">
-                    <span class="note-date">2025-08-27</span> | 
-                    <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a> | 
+                    <span class="note-date">2025-08-27</span>
+                    <span class="note-title"><a href="notes/home-network-setup.html">Home Network Setup</a></span>
                     <span class="category-tag">Networking</span>
                 </div>
             </li>
