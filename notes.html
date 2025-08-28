@@ -37,7 +37,7 @@ body {
 }
 
 /* ======================================
-    3. SEARCH BAR STYLING (NEW)
+    3. SEARCH BAR STYLING
     ====================================== */
 .search-container {
     margin: 0 auto 20px; /* Centers the container and adds bottom margin */
@@ -83,19 +83,23 @@ body {
     margin-right: 15px;
 }
 
-/* Column widths for note items */
+/* ======================================
+    FIXED COLUMN WIDTHS
+    ====================================== */
 .note-date {
-    flex: 0 0 100px;
+    flex: 0 0 120px; /* fixed width for date */
 }
 
 .note-title {
-    flex: 1 1 300px;
+    flex: 1; /* stretch between date and category */
+    min-width: 200px;
     text-decoration: none;
     color: #0f0;
 }
 
 .note-category {
-    flex: 0 0 120px;
+    flex: 0 0 150px; /* fixed width for category */
+    text-align: right;
 }
 
 .note-category a {
@@ -104,7 +108,9 @@ body {
     cursor: pointer;
 }
 
-/* Sort link above category column */
+/* ======================================
+    SORT LINK
+    ====================================== */
 .sort-link {
     cursor: pointer;
     font-weight: bold;
@@ -120,7 +126,9 @@ body {
     color: #ff0;
 }
 
-/* New CSS for column headers to prevent layout issues */
+/* ======================================
+    COLUMN HEADERS
+    ====================================== */
 .column-headers {
     display: flex;
     margin-bottom: 10px;
@@ -128,19 +136,22 @@ body {
 }
 
 .column-headers .note-date {
-    flex: 0 0 100px;
-}
-
-.column-headers .note-title {
-    flex: 1 1 auto; /* Allow title to grow and shrink */
-}
-
-.column-headers .note-category {
     flex: 0 0 120px;
 }
 
+.column-headers .note-title {
+    flex: 1;
+    min-width: 200px;
+}
 
-/* Mobile-specific improvements */
+.column-headers .note-category {
+    flex: 0 0 150px;
+    text-align: right;
+}
+
+/* ======================================
+    5. MOBILE IMPROVEMENTS
+    ====================================== */
 @media (max-width: 600px) {
     body {
         padding: 20px 15px;
@@ -181,6 +192,7 @@ body {
     
     .note-category {
         margin-bottom: 0;
+        text-align: left; /* reset for small screens */
     }
     
     .note-category a {
