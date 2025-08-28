@@ -5,8 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes - Tech Notes</title>
     <link rel="stylesheet" href="style.css">
+
+    /* ======================================
+       1. NOTE HEADER STYLING
+       ====================================== */
+    <style>
+        .note-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: monospace; /* tech-style look */
+        }
+
+        .note-header span {
+            color: #0f0; /* optional color for date and category */
+        }
+
+        .note-header .note-title {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Optional: spacing between notes */
+        .note-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #444;
+        }
+    </style>
 </head>
 <body>
+    <!-- ======================================
+         2. HEADER AND NAVIGATION
+         ====================================== -->
     <header>
         <h1>Tech Notes</h1>
         <nav>
@@ -16,12 +45,21 @@
         </nav>
     </header>
 
+    <!-- ======================================
+         3. MAIN CONTENT
+         ====================================== -->
     <main>
+        <!-- ======================================
+             3a. PAGE TITLE
+             ====================================== -->
         <div class="page-title">
             <h2>Notes</h2>
             <p>Technical documentation, tutorials, and quick references</p>
         </div>
 
+        <!-- ======================================
+             3b. STATS
+             ====================================== -->
         <div class="stats">
             <div class="stats-grid">
                 <div class="stat-item">
@@ -39,6 +77,9 @@
             </div>
         </div>
 
+        <!-- ======================================
+             3c. CATEGORY FILTER
+             ====================================== -->
         <div class="category-filter">
             <select id="categoryFilter">
                 <option value="">All Categories</option>
@@ -51,50 +92,45 @@
             </select>
         </div>
 
+        <!-- ======================================
+             3d. NOTES LIST
+             ====================================== -->
         <ul class="notes-list" id="notesList">
+
+            <!-- Note 1 -->
             <li class="note-item" data-category="software">
                 <div class="note-header">
-                    <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
-                    <div class="note-meta">
-                        <span class="note-date">Aug 27, 2025</span>
-                        <span class="category-tag">software</span>
-                    </div>
-                </div>
-                <div class="note-preview">
-                    First post on the new Tech Notes site. Overview of what to expect and how the site is organized.
+                    <span class="note-date">2025-08-27</span> | 
+                    <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a> | 
+                    <span class="category-tag">Software</span>
                 </div>
             </li>
 
+            <!-- Note 2 -->
             <li class="note-item" data-category="scripts">
                 <div class="note-header">
-                    <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
-                    <div class="note-meta">
-                        <span class="note-date">Aug 27, 2025</span>
-                        <span class="category-tag">scripts</span>
-                    </div>
-                </div>
-                <div class="note-preview">
-                    Essential bash scripting concepts including variables, loops, and functions for automation tasks.
+                    <span class="note-date">2025-08-27</span> | 
+                    <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a> | 
+                    <span class="category-tag">Scripts</span>
                 </div>
             </li>
 
+            <!-- Note 3 -->
             <li class="note-item" data-category="networking">
                 <div class="note-header">
-                    <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
-                    <div class="note-meta">
-                        <span class="note-date">Aug 27, 2025</span>
-                        <span class="category-tag">networking</span>
-                    </div>
-                </div>
-                <div class="note-preview">
-                    Basic home networking setup including router configuration, port forwarding, and security considerations.
+                    <span class="note-date">2025-08-27</span> | 
+                    <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a> | 
+                    <span class="category-tag">Networking</span>
                 </div>
             </li>
+
         </ul>
     </main>
 
+    <!-- ======================================
+         4. CATEGORY FILTER SCRIPT
+         ====================================== -->
     <script>
-        // Category filtering functionality
         document.getElementById('categoryFilter').addEventListener('change', function() {
             const selectedCategory = this.value;
             const noteItems = document.querySelectorAll('.note-item');
