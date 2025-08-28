@@ -58,26 +58,19 @@ body {
     white-space: nowrap;
 }
 
+.note-category {
+    margin-right: 15px;
+}
+
 /* Column widths */
 .note-date {
     flex: 0 0 100px;
 }
 
 .note-title {
-    flex: 1 1 200px;
+    flex: 1 1 300px;
     text-decoration: none;
     color: #0f0;
-}
-
-.note-labels {
-    flex: 1 1 200px;
-}
-
-.note-labels a {
-    color: #0f0;
-    text-decoration: none;
-    margin-right: 4px;
-    cursor: pointer;
 }
 
 .note-category {
@@ -96,25 +89,76 @@ body {
     font-weight: bold;
     margin-bottom: 4px;
     display: inline-block;
+    margin-right: 8px;
 }
 
 /* Hover effects */
 .note-title:hover,
-.note-labels a:hover,
 .note-category a:hover,
 .sort-link:hover {
     color: #ff0;
 }
 
-/* Responsive for small screens */
+/* Mobile-specific improvements */
 @media (max-width: 600px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    .header-container h1 {
+        font-size: 20px;
+    }
+    
+    .header-container nav a {
+        display: inline-block;
+        margin: 5px 8px;
+        padding: 8px 12px;
+        border: 1px solid #0f0;
+        border-radius: 4px;
+        min-height: 44px;
+        box-sizing: border-box;
+    }
+    
     .note-item {
         flex-direction: column;
         align-items: flex-start;
+        padding: 12px 0;
+        border-bottom: 1px solid #333;
     }
+    
+    .note-date {
+        font-size: 12px;
+        margin-bottom: 4px;
+        color: #888;
+    }
+    
+    .note-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+    
+    .note-category {
+        margin-bottom: 0;
+    }
+    
+    .note-category a {
+        padding: 4px 8px;
+        border: 1px solid #0f0;
+        border-radius: 4px;
+        font-size: 12px;
+        min-height: 32px;
+        box-sizing: border-box;
+    }
+    
+    .sort-link {
+        font-size: 14px;
+        padding: 10px 16px;
+        margin-bottom: 8px;
+    }
+    
     .note-date,
     .note-title,
-    .note-labels,
     .note-category {
         flex: 1 1 100%;
         margin-right: 0;
@@ -137,76 +181,81 @@ body {
 </div>
 
 <!-- ======================================
+     SEARCH BAR
+     ====================================== -->
+<div class="search-container" style="margin-bottom: 20px; text-align: center;">
+    <input type="text" id="search-input" placeholder="Search notes..." 
+           style="font-family: monospace; background: #000; color: #0f0; border: 1px solid #0f0; padding: 12px 16px; width: 300px; max-width: 90%; font-size: 16px; border-radius: 4px;">
+</div>
+
+<!-- ======================================
+     COLUMN HEADERS
+     ====================================== -->
+<div class="note-item" style="margin-bottom: 10px; font-weight: bold;">
+    <span class="note-date">Date</span>
+    <span class="note-title" style="flex: 1 1 300px;">Title</span>
+    <span class="note-category">
+        <span class="sort-link" id="category-sort">Sort by Category ▼</span>
+    </span>
+</div>
+
+<!-- ======================================
      NOTES LIST
      ====================================== -->
 <ul class="notes-list">
     <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
         <span class="note-date">2025-08-27</span>
         <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
-        <span class="note-labels">
-            <a data-label="install">install</a>, 
-            <a data-label="openbsd">openbsd</a>, 
-            <a data-label="tutorial">tutorial</a>
-        </span>
         <span class="note-category">
-            <span class="sort-link">Sort ▼</span>
             <a data-category="Software">Software</a>
         </span>
     </li>
     <li class="note-item" data-category="Software" data-labels="intro,overview">
         <span class="note-date">2025-08-27</span>
         <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
-        <span class="note-labels">
-            <a data-label="intro">intro</a>, 
-            <a data-label="overview">overview</a>
-        </span>
         <span class="note-category">
-            <span class="sort-link">Sort ▼</span>
             <a data-category="Software">Software</a>
         </span>
     </li>
     <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
         <span class="note-date">2025-08-27</span>
         <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
-        <span class="note-labels">
-            <a data-label="bash">bash</a>, 
-            <a data-label="scripting">scripting</a>, 
-            <a data-label="automation">automation</a>
-        </span>
         <span class="note-category">
-            <span class="sort-link">Sort ▼</span>
             <a data-category="Scripts">Scripts</a>
         </span>
     </li>
     <li class="note-item" data-category="Networking" data-labels="networking,router,security">
         <span class="note-date">2025-08-27</span>
         <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
-        <span class="note-labels">
-            <a data-label="networking">networking</a>, 
-            <a data-label="router">router</a>, 
-            <a data-label="security">security</a>
-        </span>
         <span class="note-category">
-            <span class="sort-link">Sort ▼</span>
             <a data-category="Networking">Networking</a>
         </span>
     </li>
 </ul>
 
 <!-- ======================================
-     SCRIPT FOR LABEL/ CATEGORY FILTER AND SORT
+     SCRIPT FOR SEARCH, FILTER AND SORT
      ====================================== -->
 <script>
 const notes = Array.from(document.querySelectorAll('.note-item'));
 
-// Filter by label
-document.querySelectorAll('.note-labels a').forEach(label => {
-    label.addEventListener('click', e => {
-        const value = e.target.dataset.label;
-        notes.forEach(note => {
-            const noteLabels = note.dataset.labels.split(',');
-            note.style.display = noteLabels.includes(value) ? 'flex' : 'none';
-        });
+// Search functionality
+document.getElementById('search-input').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    notes.forEach(note => {
+        const title = note.querySelector('.note-title').textContent.toLowerCase();
+        const category = note.dataset.category.toLowerCase();
+        const labels = note.dataset.labels.toLowerCase();
+        const date = note.querySelector('.note-date').textContent.toLowerCase();
+        
+        // Search across title, category, labels, and date
+        const isMatch = title.includes(searchTerm) || 
+                       category.includes(searchTerm) || 
+                       labels.includes(searchTerm) || 
+                       date.includes(searchTerm);
+        
+        note.style.display = isMatch ? 'flex' : 'none';
     });
 });
 
@@ -220,24 +269,29 @@ document.querySelectorAll('.note-category a').forEach(cat => {
     });
 });
 
-// Sort by category
-document.querySelectorAll('.sort-link').forEach(sort => {
-    sort.addEventListener('click', () => {
-        // Simple toggle between A-Z and Z-A
-        const isAZ = sort.textContent.includes('▼');
-        sort.textContent = isAZ ? 'Sort ▲' : 'Sort ▼';
+// Single sort button for categories
+let sortAscending = true;
 
-        const sortedNotes = notes.slice().sort((a, b) => {
-            const catA = a.dataset.category.toUpperCase();
-            const catB = b.dataset.category.toUpperCase();
-            if (isAZ) return catA > catB ? 1 : -1;
-            else return catA < catB ? 1 : -1;
-        });
+document.getElementById('category-sort').addEventListener('click', () => {
+    // Toggle sort direction
+    sortAscending = !sortAscending;
+    
+    // Update sort button display
+    const sortButton = document.getElementById('category-sort');
+    sortButton.textContent = sortAscending ? 'Sort by Category ▲' : 'Sort by Category ▼';
 
-        const list = document.querySelector('.notes-list');
-        list.innerHTML = '';
-        sortedNotes.forEach(n => list.appendChild(n));
+    // Sort all notes by category
+    const sortedNotes = notes.slice().sort((a, b) => {
+        const catA = a.dataset.category.toUpperCase();
+        const catB = b.dataset.category.toUpperCase();
+        if (sortAscending) return catA < catB ? -1 : catA > catB ? 1 : 0;
+        else return catA > catB ? -1 : catA < catB ? 1 : 0;
     });
+
+    // Re-render the sorted list
+    const list = document.querySelector('.notes-list');
+    list.innerHTML = '';
+    sortedNotes.forEach(n => list.appendChild(n));
 });
 </script>
 
