@@ -1,180 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes - Tech Notes</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes - Tech Notes</title>
+<link rel="stylesheet" href="style.css">
 
-    <style>
-        /* ======================================
-           1. NOTE HEADER STYLING WITH FIXED COLUMNS
-           ====================================== */
-        .note-item {
-            border-bottom: 1px solid #444;
-            padding: 6px 0;
-            font-family: monospace;
-            font-weight: bold;
-        }
+<style>
+/* ======================================
+   1. NOTES LIST STYLING
+   ====================================== */
+.notes-list {
+    list-style: none;
+    padding: 0;
+    font-family: monospace;
+    font-weight: bold;
+}
 
-        .note-header {
-            display: flex;
-        }
+.notes-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
 
-        /* Fixed width columns */
-        .note-header .note-date {
-            width: 120px;
-            color: #0f0;
-            font-family: monospace;
-            font-size: 1em;
-        }
+/* Date styling */
+.notes-list li::before {
+    content: attr(data-date);
+    color: #0f0;
+    width: 120px;
+    display: inline-block;
+}
 
-        .note-header .note-title {
-            width: 300px;
-            padding-left: 5px;
-        }
+/* Category styling */
+.notes-list li::after {
+    content: attr(data-category);
+    color: #0f0;
+    width: 120px;
+    display: inline-block;
+    text-align: right;
+}
 
-        .note-header .category-tag {
-            width: 120px;
-            padding-left: 5px;
-            text-align: right;
-            color: #0f0;
-            font-family: monospace;
-            font-size: 1em;
-        }
+/* Title link styling */
+.notes-list li a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        /* Add dividers automatically */
-        .note-header .note-date::after {
-            content: " |";
-            padding-right: 5px;
-        }
+.notes-list li a:hover {
+    color: #0f0;
+}
 
-        .note-header .note-title::after {
-            content: " |";
-            padding-right: 5px;
-        }
-
-        .note-header .note-title a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .note-header .note-title a:hover {
-            color: #0f0;
-        }
-    </style>
+/* Optional: category filter dropdown styling */
+.category-filter {
+    margin: 15px 0;
+}
+</style>
 </head>
 <body>
+
+<!-- ======================================
+     2. HEADER AND NAVIGATION
+     ====================================== -->
+<header>
+<h1>Tech Notes</h1>
+<nav>
+    <a href="index.html">About</a>
+    <a href="notes.html" class="active">Notes</a>
+    <a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<!-- ======================================
+     3. MAIN CONTENT
+     ====================================== -->
+<main>
     <!-- ======================================
-         2. HEADER AND NAVIGATION
+         3a. PAGE TITLE
          ====================================== -->
-    <header>
-        <h1>Tech Notes</h1>
-        <nav>
-            <a href="index.html">About</a>
-            <a href="notes.html" class="active">Notes</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
+    <div class="page-title">
+        <h2>Notes</h2>
+        <p>Technical documentation, tutorials, and quick references</p>
+    </div>
 
     <!-- ======================================
-         3. MAIN CONTENT
+         3b. STATS
          ====================================== -->
-    <main>
-        <!-- ======================================
-             3a. PAGE TITLE
-             ====================================== -->
-        <div class="page-title">
-            <h2>Notes</h2>
-            <p>Technical documentation, tutorials, and quick references</p>
-        </div>
-
-        <!-- ======================================
-             3b. STATS
-             ====================================== -->
-        <div class="stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">3</span>
-                    Total Notes
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">6</span>
-                    Categories
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">1</span>
-                    This Month
-                </div>
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">3</span> Total Notes
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">6</span> Categories
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1</span> This Month
             </div>
         </div>
-
-        <!-- ======================================
-             3c. CATEGORY FILTER
-             ====================================== -->
-        <div class="category-filter">
-            <select id="categoryFilter">
-                <option value="">All Categories</option>
-                <option value="operating-systems">Operating Systems</option>
-                <option value="networking">Networking</option>
-                <option value="software">Software</option>
-                <option value="security">Security</option>
-                <option value="scripts">Scripts</option>
-                <option value="hardware">Hardware</option>
-            </select>
-        </div>
-
-        <!-- ======================================
-             3d. NOTES LIST
-             ====================================== -->
-        <ul class="notes-list" id="notesList">
-
-            <!-- Note 1 -->
-            <li class="note-item" data-category="software">
-                <div class="note-header">
-                    <span class="note-date">2025-08-27</span>
-                    <span class="note-title"><a href="notes/welcome-to-tech-notes.html">Welcome to Tech Notes</a></span>
-                    <span class="category-tag">Software</span>
-                </div>
-            </li>
-
-            <!-- Note 2 -->
-            <li class="note-item" data-category="scripts">
-                <div class="note-header">
-                    <span class="note-date">2025-08-27</span>
-                    <span class="note-title"><a href="notes/bash-basics.html">Bash Scripting Basics</a></span>
-                    <span class="category-tag">Scripts</span>
-                </div>
-            </li>
-
-            <!-- Note 3 -->
-            <li class="note-item" data-category="networking">
-                <div class="note-header">
-                    <span class="note-date">2025-08-27</span>
-                    <span class="note-title"><a href="notes/home-network-setup.html">Home Network Setup</a></span>
-                    <span class="category-tag">Networking</span>
-                </div>
-            </li>
-
-        </ul>
-    </main>
+    </div>
 
     <!-- ======================================
-         4. CATEGORY FILTER SCRIPT
+         3c. CATEGORY FILTER
          ====================================== -->
-    <script>
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            const selectedCategory = this.value;
-            const noteItems = document.querySelectorAll('.note-item');
-            
-            noteItems.forEach(item => {
-                if (selectedCategory === '' || item.dataset.category === selectedCategory) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    </script>
+    <div class="category-filter">
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="operating-systems">Operating Systems</option>
+            <option value="networking">Networking</option>
+            <option value="software">Software</option>
+            <option value="security">Security</option>
+            <option value="scripts">Scripts</option>
+            <option value="hardware">Hardware</option>
+        </select>
+    </div>
+
+    <!-- ======================================
+         3d. NOTES LIST
+         ====================================== -->
+    <ul class="notes-list" id="notesList">
+
+        <!-- Note 1 -->
+        <li data-date="2025-08-27" data-category="Software">
+            <a href="notes/welcome-to-tech-notes.html">Welcome to Tech Notes</a>
+        </li>
+
+        <!-- Note 2 -->
+        <li data-date="2025-08-27" data-category="Scripts">
+            <a href="notes/bash-basics.html">Bash Scripting Basics</a>
+        </li>
+
+        <!-- Note 3 -->
+        <li data-date="2025-08-27" data-category="Networking">
+            <a href="notes/home-network-setup.html">Home Network Setup</a>
+        </li>
+
+    </ul>
+</main>
+
+<!-- ======================================
+     4. CATEGORY FILTER SCRIPT
+     ====================================== -->
+<script>
+document.getElementById('categoryFilter').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    const noteItems = document.querySelectorAll('.notes-list li');
+
+    noteItems.forEach(item => {
+        if (selectedCategory === '' || item.dataset.category.toLowerCase() === selectedCategory) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+});
+</script>
 </body>
 </html>
