@@ -11,92 +11,97 @@
    1. PAGE TITLE STYLING
    ====================================== */
 .page-title {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: left;
     font-family: monospace;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 /* ======================================
-   2. CATEGORY FILTER CENTERED
+   2. NOTES HEADER (Title + Category Dropdown)
    ====================================== */
-.category-filter-centered {
-    width: 442px;        /* same as notes line width */
-    margin: 0 auto;      /* center container on page */
-    text-align: center;  /* center dropdown inside container */
-    margin-bottom: 20px; /* spacing below dropdown */
-}
-
-#categoryFilter {
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/* ======================================
-   3. NOTES LIST STYLING
-   ====================================== */
-.notes-list {
-    list-style: none;
-    padding: 0;
-    font-family: monospace;
-    font-weight: bold;
-}
-
-.notes-list li {
+.notes-header {
     display: flex;
     justify-content: space-between;
-    padding: 4px 0;
-    flex-wrap: wrap; /* allows items to wrap on smaller screens */
+    align-items: center;
+    font-family: monospace;
+    margin-bottom: 20px;
 }
 
-/* Date styling */
-.notes-list li::before {
-    content: attr(data-date);
-    color: #0f0;
-    width: 120px;
-    display: inline-block;
+.notes-header h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.notes-header select {
+    font-family: monospace;
+    font-weight: bold;
     font-size: 16px;
 }
 
-/* Title styling */
-.notes-list li a {
-    flex: 1;
-    min-width: 150px;
+/* ======================================
+   3. NOTES LIST GRID
+   ====================================== */
+.notes-list {
+    display: grid;
+    grid-template-columns: 120px 1fr 200px 120px; /* Date | Note | Labels | Category */
+    gap: 10px;
+    align-items: center;
+    font-family: monospace;
+    font-weight: bold;
+    list-style: none;
+    padding: 0;
+}
+
+.note-item {
+    display: contents; /* children take the grid columns */
+}
+
+.note-date {
+    color: #0f0;
+    font-size: 16px;
+}
+
+.note-title {
     text-decoration: none;
     color: inherit;
     font-size: 16px;
 }
 
-.notes-list li a:hover {
-    color: #0f0;
+.note-title:hover {
+    color: #ff0;
 }
 
-/* Category styling */
-.notes-list li::after {
-    content: attr(data-category);
+.note-labels a {
+    font-style: italic;
     color: #0f0;
-    width: 120px;
-    text-align: right;
-    display: inline-block;
-    font-size: 16px;
+    text-decoration: none;
+    margin-right: 4px;
+}
+
+.note-labels a:hover {
+    color: #ff0;
+}
+
+.note-category a {
+    color: #0f0;
+    text-decoration: none;
+}
+
+.note-category a:hover {
+    color: #ff0;
 }
 
 /* ======================================
    4. RESPONSIVE STYLING
    ====================================== */
-@media (max-width: 600px) {
-    .notes-list li {
-        flex-direction: column;
-        align-items: flex-start;
+@media (max-width: 700px) {
+    .notes-list {
+        grid-template-columns: 1fr; /* stack all columns on small screens */
     }
-    .notes-list li::before,
-    .notes-list li::after {
-        width: auto;
-        text-align: left;
+    .note-item > * {
+        display: block;
         margin: 2px 0;
-    }
-    .notes-list li a {
-        min-width: auto;
     }
 }
 </style>
@@ -107,8 +112,8 @@
      5. HEADER AND NAVIGATION
      ====================================== -->
 <header>
-<h1 style="text-align:center;">Tech Notes</h1>
-<nav style="text-align:center;">
+<h1 style="text-align:left; font-family: monospace;">Tech Notes</h1>
+<nav style="text-align:left; font-family: monospace;">
     <a href="index.html">About</a>
     <a href="notes.html" class="active">Notes</a>
     <a href="contact.html">Contact</a>
@@ -119,66 +124,89 @@
      6. MAIN CONTENT
      ====================================== -->
 <main>
-    <!-- ======================================
-         6a. PAGE TITLE
-         ====================================== -->
+    <!-- Page Title -->
     <div class="page-title">
         <h2>Notes</h2>
         <p>Technical documentation, tutorials, and quick references</p>
     </div>
 
-    <!-- ======================================
-         6b. CATEGORY FILTER CENTERED
-         ====================================== -->
-    <div class="category-filter-centered">
-        <select id="categoryFilter">
-            <option value="">All Categories</option>
-            <option value="operating-systems">Operating Systems</option>
-            <option value="networking">Networking</option>
-            <option value="software">Software</option>
-            <option value="security">Security</option>
-            <option value="scripts">Scripts</option>
-            <option value="hardware">Hardware</option>
-        </select>
-    </div>
-
-    <!-- ======================================
-         6c. NOTES LIST
-         ====================================== -->
+    <!-- Notes List -->
     <ul class="notes-list" id="notesList">
 
         <!-- Note 1 -->
-        <li data-date="2025-08-27" data-category="Software">
-            <a href="notes/welcome-to-tech-notes.html">Welcome to Tech Notes</a>
+        <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
+            <span class="note-labels">
+                <a href="#" class="filter-label" data-label="install">install</a>,
+                <a href="#" class="filter-label" data-label="openbsd">openbsd</a>,
+                <a href="#" class="filter-label" data-label="tutorial">tutorial</a>
+            </span>
+            <span class="note-category"><a href="#" class="filter-category" data-category="Software">Software</a></span>
         </li>
 
         <!-- Note 2 -->
-        <li data-date="2025-08-27" data-category="Scripts">
-            <a href="notes/bash-basics.html">Bash Scripting Basics</a>
+        <li class="note-item" data-category="Software" data-labels="intro,overview">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
+            <span class="note-labels">
+                <a href="#" class="filter-label" data-label="intro">intro</a>,
+                <a href="#" class="filter-label" data-label="overview">overview</a>
+            </span>
+            <span class="note-category"><a href="#" class="filter-category" data-category="Software">Software</a></span>
         </li>
 
         <!-- Note 3 -->
-        <li data-date="2025-08-27" data-category="Networking">
-            <a href="notes/home-network-setup.html">Home Network Setup</a>
+        <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
+            <span class="note-labels">
+                <a href="#" class="filter-label" data-label="bash">bash</a>,
+                <a href="#" class="filter-label" data-label="scripting">scripting</a>,
+                <a href="#" class="filter-label" data-label="automation">automation</a>
+            </span>
+            <span class="note-category"><a href="#" class="filter-category" data-category="Scripts">Scripts</a></span>
+        </li>
+
+        <!-- Note 4 -->
+        <li class="note-item" data-category="Networking" data-labels="networking,router,security">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
+            <span class="note-labels">
+                <a href="#" class="filter-label" data-label="networking">networking</a>,
+                <a href="#" class="filter-label" data-label="router">router</a>,
+                <a href="#" class="filter-label" data-label="security">security</a>
+            </span>
+            <span class="note-category"><a href="#" class="filter-category" data-category="Networking">Networking</a></span>
         </li>
 
     </ul>
 </main>
 
 <!-- ======================================
-     7. CATEGORY FILTER SCRIPT
+     7. FILTER SCRIPT
      ====================================== -->
 <script>
-document.getElementById('categoryFilter').addEventListener('change', function() {
-    const selectedCategory = this.value;
-    const noteItems = document.querySelectorAll('.notes-list li');
+// Label click filtering
+document.querySelectorAll('.filter-label').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const label = this.dataset.label.toLowerCase();
+        document.querySelectorAll('.note-item').forEach(item => {
+            const labels = item.dataset.labels.toLowerCase();
+            item.style.display = labels.includes(label) ? 'flex' : 'none';
+        });
+    });
+});
 
-    noteItems.forEach(item => {
-        if (selectedCategory === '' || item.dataset.category.toLowerCase() === selectedCategory) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
-        }
+// Category click filtering
+document.querySelectorAll('.filter-category').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const category = this.dataset.category.toLowerCase();
+        document.querySelectorAll('.note-item').forEach(item => {
+            item.style.display = item.dataset.category.toLowerCase() === category ? 'flex' : 'none';
+        });
     });
 });
 </script>
