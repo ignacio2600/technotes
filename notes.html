@@ -8,21 +8,28 @@
 
 <style>
 /* ======================================
-   1. STATS CONTAINER STYLING
+   1. PAGE TITLE STYLING
    ====================================== */
-.stats {
-    margin: 15px 0;
-    display: flex;
-    gap: 20px;
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
     font-family: monospace;
-    font-weight: bold;
 }
 
 /* ======================================
-   2. CATEGORY FILTER CONTAINER STYLING
+   2. CATEGORY FILTER CENTERED
    ====================================== */
-.category-filter {
-    margin: 15px 0;
+.category-filter-centered {
+    width: 442px;        /* same as notes line width */
+    margin: 0 auto;      /* center container on page */
+    text-align: center;  /* center dropdown inside container */
+    margin-bottom: 20px; /* spacing below dropdown */
+}
+
+#categoryFilter {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 /* ======================================
@@ -100,8 +107,8 @@
      5. HEADER AND NAVIGATION
      ====================================== -->
 <header>
-<h1>Tech Notes</h1>
-<nav>
+<h1 style="text-align:center;">Tech Notes</h1>
+<nav style="text-align:center;">
     <a href="index.html">About</a>
     <a href="notes.html" class="active">Notes</a>
     <a href="contact.html">Contact</a>
@@ -121,18 +128,9 @@
     </div>
 
     <!-- ======================================
-         6b. STATS CONTAINER
+         6b. CATEGORY FILTER CENTERED
          ====================================== -->
-    <div class="stats">
-        <div>Total Notes: 3</div>
-        <div>Categories: 6</div>
-        <div>This Month: 1</div>
-    </div>
-
-    <!-- ======================================
-         6c. CATEGORY FILTER CONTAINER
-         ====================================== -->
-    <div class="category-filter">
+    <div class="category-filter-centered">
         <select id="categoryFilter">
             <option value="">All Categories</option>
             <option value="operating-systems">Operating Systems</option>
@@ -145,7 +143,7 @@
     </div>
 
     <!-- ======================================
-         6d. NOTES LIST
+         6c. NOTES LIST
          ====================================== -->
     <ul class="notes-list" id="notesList">
 
