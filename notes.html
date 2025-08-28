@@ -6,8 +6,8 @@
 <title>Notes - Tech Notes</title>
 <style>
 /* ======================================
-   1. PAGE STYLING
-   ====================================== */
+    1. PAGE STYLING
+    ====================================== */
 body {
     font-family: monospace;
     background: #000;
@@ -17,8 +17,8 @@ body {
 }
 
 /* ======================================
-   2. HEADER
-   ====================================== */
+    2. HEADER
+    ====================================== */
 .header-container {
     text-align: center;
     margin-bottom: 30px;
@@ -37,8 +37,28 @@ body {
 }
 
 /* ======================================
-   3. NOTES LIST
-   ====================================== */
+    3. SEARCH BAR STYLING (NEW)
+    ====================================== */
+.search-container {
+    margin: 0 auto 20px; /* Centers the container and adds bottom margin */
+    text-align: center;
+    max-width: 600px; /* Constrains the width for better centering */
+}
+#search-input {
+    font-family: monospace;
+    background: #000;
+    color: #0f0;
+    border: 1px solid #0f0;
+    padding: 12px 16px;
+    width: 300px;
+    max-width: 90%;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+/* ======================================
+    4. NOTES LIST
+    ====================================== */
 .notes-list {
     list-style: none;
     padding: 0;
@@ -50,6 +70,7 @@ body {
     flex-wrap: wrap;
     margin-bottom: 6px;
     line-height: 1.5em;
+    align-items: center; /* Vertically align items */
 }
 
 .note-item span,
@@ -62,7 +83,7 @@ body {
     margin-right: 15px;
 }
 
-/* Column widths */
+/* Column widths for note items */
 .note-date {
     flex: 0 0 100px;
 }
@@ -98,6 +119,26 @@ body {
 .sort-link:hover {
     color: #ff0;
 }
+
+/* New CSS for column headers to prevent layout issues */
+.column-headers {
+    display: flex;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.column-headers .note-date {
+    flex: 0 0 100px;
+}
+
+.column-headers .note-title {
+    flex: 1 1 auto; /* Allow title to grow and shrink */
+}
+
+.column-headers .note-category {
+    flex: 0 0 120px;
+}
+
 
 /* Mobile-specific improvements */
 @media (max-width: 600px) {
@@ -163,14 +204,16 @@ body {
         flex: 1 1 100%;
         margin-right: 0;
     }
+    
+    /* Hide column headers on mobile */
+    .column-headers {
+        display: none;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- ======================================
-     HEADER
-     ====================================== -->
 <div class="header-container">
     <h1>Tech Notes</h1>
     <nav>
@@ -180,28 +223,18 @@ body {
     </nav>
 </div>
 
-<!-- ======================================
-     SEARCH BAR
-     ====================================== -->
-<div class="search-container" style="margin-bottom: 20px; text-align: center;">
-    <input type="text" id="search-input" placeholder="Search notes..." 
-           style="font-family: monospace; background: #000; color: #0f0; border: 1px solid #0f0; padding: 12px 16px; width: 300px; max-width: 90%; font-size: 16px; border-radius: 4px;">
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search notes...">
 </div>
 
-<!-- ======================================
-     COLUMN HEADERS
-     ====================================== -->
-<div class="note-item" style="margin-bottom: 10px; font-weight: bold;">
+<div class="column-headers">
     <span class="note-date">Date</span>
-    <span class="note-title" style="flex: 1 1 300px;">Title</span>
+    <span class="note-title">Title</span>
     <span class="note-category">
         <span class="sort-link" id="category-sort">Sort by Category ▼</span>
     </span>
 </div>
 
-<!-- ======================================
-     NOTES LIST
-     ====================================== -->
 <ul class="notes-list">
     <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
         <span class="note-date">2025-08-27</span>
@@ -233,9 +266,6 @@ body {
     </li>
 </ul>
 
-<!-- ======================================
-     SCRIPT FOR SEARCH, FILTER AND SORT
-     ====================================== -->
 <script>
 const notes = Array.from(document.querySelectorAll('.note-item'));
 
@@ -251,9 +281,9 @@ document.getElementById('search-input').addEventListener('input', function(e) {
         
         // Search across title, category, labels, and date
         const isMatch = title.includes(searchTerm) || 
-                       category.includes(searchTerm) || 
-                       labels.includes(searchTerm) || 
-                       date.includes(searchTerm);
+                        category.includes(searchTerm) || 
+                        labels.includes(searchTerm) || 
+                        date.includes(searchTerm);
         
         note.style.display = isMatch ? 'flex' : 'none';
     });
