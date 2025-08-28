@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Notes - Tech Notes</title>
 <style>
 /* ======================================
@@ -14,6 +14,14 @@ body {
     color: #0f0;
     padding: 30px;
     margin: 0;
+}
+
+/* Centered page container so columns don't stretch to the page edge */
+.main {
+    max-width: 980px;   /* change this number to widen/narrow the content area */
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
 /* ======================================
@@ -40,9 +48,9 @@ body {
     3. SEARCH BAR STYLING
     ====================================== */
 .search-container {
-    margin: 0 auto 20px; /* Centers the container and adds bottom margin */
+    margin: 0 auto 20px;
     text-align: center;
-    max-width: 600px; /* Constrains the width for better centering */
+    max-width: 600px;
 }
 #search-input {
     font-family: monospace;
@@ -51,9 +59,10 @@ body {
     border: 1px solid #0f0;
     padding: 12px 16px;
     width: 300px;
-    max-width: 90%;
+    max-width: 100%;
     font-size: 16px;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 /* ======================================
@@ -65,58 +74,62 @@ body {
     margin: 0;
 }
 
+/* Each note row: use flex with gap for predictable spacing */
 .note-item {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 6px;
-    line-height: 1.5em;
-    align-items: center; /* Vertically align items */
+    align-items: center;
+    gap: 12px;            /* consistent spacing between columns */
+    margin-bottom: 8px;
+    line-height: 1.4;
+    padding: 6px 0;
 }
 
-.note-item span,
-.note-item a {
-    margin-right: 15px;
-    white-space: nowrap;
-}
+/* remove the old global nowrap / margin rules and control per-column behavior below */
 
-.note-category {
-    margin-right: 15px;
-}
-
-/* ======================================
-    FIXED COLUMN WIDTHS
-    ====================================== */
+/* Date column: fixed width, never wraps */
 .note-date {
-    flex: 0 0 120px; /* fixed width for date */
+    flex: 0 0 120px;
+    white-space: nowrap;
+    font-size: 13px;
+    color: #888;
 }
 
+/* Title column: flexible, will ellipsis if too long on wide screens */
 .note-title {
-    flex: 1; /* stretch between date and category */
-    min-width: 200px;
+    flex: 1 1 auto;
+    min-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     text-decoration: none;
     color: #0f0;
+    display: inline-block; /* needed for ellipsis to work reliably */
 }
 
+/* Category column: fixed width and left-aligned so it sits close to the title */
 .note-category {
-    flex: 0 0 150px; /* fixed width for category */
-    text-align: right;
+    flex: 0 0 150px;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 13px;
 }
 
+/* Category link */
 .note-category a {
     color: #0f0;
     text-decoration: none;
     cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
-/* ======================================
-    SORT LINK
-    ====================================== */
+/* Sort link above category column */
 .sort-link {
     cursor: pointer;
     font-weight: bold;
     margin-bottom: 4px;
     display: inline-block;
-    margin-right: 8px;
 }
 
 /* Hover effects */
@@ -131,6 +144,8 @@ body {
     ====================================== */
 .column-headers {
     display: flex;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -140,13 +155,16 @@ body {
 }
 
 .column-headers .note-title {
-    flex: 1;
-    min-width: 200px;
+    flex: 1 1 auto;
+    min-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .column-headers .note-category {
     flex: 0 0 150px;
-    text-align: right;
+    text-align: left;
 }
 
 /* ======================================
@@ -155,6 +173,10 @@ body {
 @media (max-width: 600px) {
     body {
         padding: 20px 15px;
+    }
+
+    .main {
+        padding: 0 8px;
     }
     
     .header-container h1 {
@@ -174,25 +196,31 @@ body {
     .note-item {
         flex-direction: column;
         align-items: flex-start;
-        padding: 12px 0;
-        border-bottom: 1px solid #333;
+        gap: 6px;
+        padding: 10px 0;
+        border-bottom: 1px solid #111;
     }
     
     .note-date {
         font-size: 12px;
-        margin-bottom: 4px;
+        margin-bottom: 0;
         color: #888;
+        flex: none;
     }
     
     .note-title {
         font-size: 16px;
-        margin-bottom: 8px;
-        line-height: 1.4;
+        white-space: normal;      /* allow wrapping on small screens */
+        overflow: visible;
+        text-overflow: initial;
+        min-width: 0;
+        margin-bottom: 4px;
     }
     
     .note-category {
         margin-bottom: 0;
-        text-align: left; /* reset for small screens */
+        text-align: left;
+        flex: none;
     }
     
     .note-category a {
@@ -209,14 +237,7 @@ body {
         padding: 10px 16px;
         margin-bottom: 8px;
     }
-    
-    .note-date,
-    .note-title,
-    .note-category {
-        flex: 1 1 100%;
-        margin-right: 0;
-    }
-    
+
     /* Hide column headers on mobile */
     .column-headers {
         display: none;
@@ -226,64 +247,66 @@ body {
 </head>
 <body>
 
-<div class="header-container">
-    <h1>Tech Notes</h1>
-    <nav>
-        <a href="index.html">About</a>
-        <a href="notes.html">Notes</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-</div>
+<div class="main">
+    <div class="header-container">
+        <h1>Tech Notes</h1>
+        <nav>
+            <a href="index.html">About</a>
+            <a href="notes.html">Notes</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </div>
 
-<div class="search-container">
-    <input type="text" id="search-input" placeholder="Search notes...">
-</div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search notes...">
+    </div>
 
-<div class="column-headers">
-    <span class="note-date">Date</span>
-    <span class="note-title">Title</span>
-    <span class="note-category">
-        <span class="sort-link" id="category-sort">Sort by Category ▼</span>
-    </span>
-</div>
+    <div class="column-headers" aria-hidden="true">
+        <span class="note-date">Date</span>
+        <span class="note-title">Title</span>
+        <span class="note-category">
+            <span class="sort-link" id="category-sort">Sort by Category ▼</span>
+        </span>
+    </div>
 
-<ul class="notes-list">
-    <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
-        <span class="note-date">2025-08-27</span>
-        <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
-        <span class="note-category">
-            <a data-category="Software">Software</a>
-        </span>
-    </li>
-    <li class="note-item" data-category="Software" data-labels="intro,overview">
-        <span class="note-date">2025-08-27</span>
-        <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
-        <span class="note-category">
-            <a data-category="Software">Software</a>
-        </span>
-    </li>
-    <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
-        <span class="note-date">2025-08-27</span>
-        <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
-        <span class="note-category">
-            <a data-category="Scripts">Scripts</a>
-        </span>
-    </li>
-    <li class="note-item" data-category="Networking" data-labels="networking,router,security">
-        <span class="note-date">2025-08-27</span>
-        <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
-        <span class="note-category">
-            <a data-category="Networking">Networking</a>
-        </span>
-    </li>
-</ul>
+    <ul class="notes-list">
+        <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
+            <span class="note-category">
+                <a data-category="Software">Software</a>
+            </span>
+        </li>
+        <li class="note-item" data-category="Software" data-labels="intro,overview">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
+            <span class="note-category">
+                <a data-category="Software">Software</a>
+            </span>
+        </li>
+        <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
+            <span class="note-category">
+                <a data-category="Scripts">Scripts</a>
+            </span>
+        </li>
+        <li class="note-item" data-category="Networking" data-labels="networking,router,security">
+            <span class="note-date">2025-08-27</span>
+            <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
+            <span class="note-category">
+                <a data-category="Networking">Networking</a>
+            </span>
+        </li>
+    </ul>
+</div>
 
 <script>
 const notes = Array.from(document.querySelectorAll('.note-item'));
 
 // Search functionality
 document.getElementById('search-input').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
+    const searchTerm = e.target.value.toLowerCase().trim();
     
     notes.forEach(note => {
         const title = note.querySelector('.note-title').textContent.toLowerCase();
@@ -292,21 +315,22 @@ document.getElementById('search-input').addEventListener('input', function(e) {
         const date = note.querySelector('.note-date').textContent.toLowerCase();
         
         // Search across title, category, labels, and date
-        const isMatch = title.includes(searchTerm) || 
+        const isMatch = !searchTerm ||
+                        title.includes(searchTerm) || 
                         category.includes(searchTerm) || 
                         labels.includes(searchTerm) || 
                         date.includes(searchTerm);
         
-        note.style.display = isMatch ? 'flex' : 'none';
+        note.style.display = isMatch ? '' : 'none';
     });
 });
 
-// Filter by category
+// Filter by category (clicking a category link)
 document.querySelectorAll('.note-category a').forEach(cat => {
     cat.addEventListener('click', e => {
         const value = e.target.dataset.category;
         notes.forEach(note => {
-            note.style.display = (note.dataset.category === value) ? 'flex' : 'none';
+            note.style.display = (note.dataset.category === value) ? '' : 'none';
         });
     });
 });
@@ -326,8 +350,8 @@ document.getElementById('category-sort').addEventListener('click', () => {
     const sortedNotes = notes.slice().sort((a, b) => {
         const catA = a.dataset.category.toUpperCase();
         const catB = b.dataset.category.toUpperCase();
-        if (sortAscending) return catA < catB ? -1 : catA > catB ? 1 : 0;
-        else return catA > catB ? -1 : catA < catB ? 1 : 0;
+        if (catA === catB) return 0;
+        return sortAscending ? (catA < catB ? -1 : 1) : (catA > catB ? -1 : 1);
     });
 
     // Re-render the sorted list
