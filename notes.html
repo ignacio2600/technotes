@@ -8,43 +8,31 @@
 
 <style>
 /* ======================================
-   1. GLOBAL FONT SETTINGS
-   ====================================== */
-body {
-    font-family: monospace;
-    font-weight: bold;
-    font-size: 16px; /* Matches stats font size */
-    margin: 0;
-    padding: 0 10px;
-}
-
-/* ======================================
-   2. STATS (LEAN INLINE WITH DIVIDERS)
+   1. STATS CONTAINER STYLING
    ====================================== */
 .stats {
-    margin: 8px 0;
-}
-
-.stats span {
-    padding: 0 5px;
-}
-
-/* ======================================
-   3. CATEGORY FILTER (LEAN)
-   ====================================== */
-#categoryFilter {
+    margin: 15px 0;
+    display: flex;
+    gap: 20px;
     font-family: monospace;
     font-weight: bold;
-    font-size: 16px; /* Matches stats */
-    margin: 8px 0;
 }
 
 /* ======================================
-   4. NOTES LIST STYLING
+   2. CATEGORY FILTER CONTAINER STYLING
+   ====================================== */
+.category-filter {
+    margin: 15px 0;
+}
+
+/* ======================================
+   3. NOTES LIST STYLING
    ====================================== */
 .notes-list {
     list-style: none;
     padding: 0;
+    font-family: monospace;
+    font-weight: bold;
 }
 
 .notes-list li {
@@ -60,16 +48,16 @@ body {
     color: #0f0;
     width: 120px;
     display: inline-block;
-    font-size: 16px; /* Matches stats */
+    font-size: 16px;
 }
 
 /* Title styling */
 .notes-list li a {
-    flex: 1; /* title takes remaining space */
+    flex: 1;
     min-width: 150px;
     text-decoration: none;
     color: inherit;
-    font-size: 16px; /* Matches stats */
+    font-size: 16px;
 }
 
 .notes-list li a:hover {
@@ -83,11 +71,11 @@ body {
     width: 120px;
     text-align: right;
     display: inline-block;
-    font-size: 16px; /* Matches stats */
+    font-size: 16px;
 }
 
 /* ======================================
-   5. RESPONSIVE STYLING
+   4. RESPONSIVE STYLING
    ====================================== */
 @media (max-width: 600px) {
     .notes-list li {
@@ -109,7 +97,7 @@ body {
 <body>
 
 <!-- ======================================
-     6. HEADER AND NAVIGATION
+     5. HEADER AND NAVIGATION
      ====================================== -->
 <header>
 <h1>Tech Notes</h1>
@@ -121,11 +109,11 @@ body {
 </header>
 
 <!-- ======================================
-     7. MAIN CONTENT
+     6. MAIN CONTENT
      ====================================== -->
 <main>
     <!-- ======================================
-         7a. PAGE TITLE
+         6a. PAGE TITLE
          ====================================== -->
     <div class="page-title">
         <h2>Notes</h2>
@@ -133,29 +121,31 @@ body {
     </div>
 
     <!-- ======================================
-         7b. STATS (LEAN INLINE WITH DIVIDERS)
+         6b. STATS CONTAINER
          ====================================== -->
-    <p class="stats">
-        <span>Total Notes: 3</span> | 
-        <span>Categories: 6</span> | 
-        <span>This Month: 1</span>
-    </p>
+    <div class="stats">
+        <div>Total Notes: 3</div>
+        <div>Categories: 6</div>
+        <div>This Month: 1</div>
+    </div>
 
     <!-- ======================================
-         7c. CATEGORY FILTER (LEAN)
+         6c. CATEGORY FILTER CONTAINER
          ====================================== -->
-    <select id="categoryFilter">
-        <option value="">All Categories</option>
-        <option value="operating-systems">Operating Systems</option>
-        <option value="networking">Networking</option>
-        <option value="software">Software</option>
-        <option value="security">Security</option>
-        <option value="scripts">Scripts</option>
-        <option value="hardware">Hardware</option>
-    </select>
+    <div class="category-filter">
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="operating-systems">Operating Systems</option>
+            <option value="networking">Networking</option>
+            <option value="software">Software</option>
+            <option value="security">Security</option>
+            <option value="scripts">Scripts</option>
+            <option value="hardware">Hardware</option>
+        </select>
+    </div>
 
     <!-- ======================================
-         7d. NOTES LIST
+         6d. NOTES LIST
          ====================================== -->
     <ul class="notes-list" id="notesList">
 
@@ -178,7 +168,7 @@ body {
 </main>
 
 <!-- ======================================
-     8. CATEGORY FILTER SCRIPT
+     7. CATEGORY FILTER SCRIPT
      ====================================== -->
 <script>
 document.getElementById('categoryFilter').addEventListener('change', function() {
