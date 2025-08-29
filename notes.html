@@ -12,6 +12,7 @@ body {
     padding: 20px;
 }
 
+/* Debug header */
 .demo-header {
     text-align: center;
     max-width: 900px;
@@ -215,13 +216,14 @@ body {
 </head>
 <body>
 
-<div class="demo-header">
+<!-- Debug Header (hidden unless ?debug=1) -->
+<div id="debug-header" class="demo-header" style="display:none;">
     <h1>🖥️ Desktop vs 📱 Mobile Preview</h1>
     <p><strong>Your SQL-style notes page with simplified controls</strong></p>
     
     <div class="view-toggle">
-        <button class="toggle-btn active" onclick="showView('desktop')">🖥️ Desktop View</button>
-        <button class="toggle-btn" onclick="showView('mobile')">📱 Mobile View</button>
+        <button id="desktop-btn" class="toggle-btn active" onclick="showView('desktop')">🖥️ Desktop View</button>
+        <button id="mobile-btn" class="toggle-btn" onclick="showView('mobile')">📱 Mobile View</button>
     </div>
 </div>
 
@@ -277,16 +279,6 @@ body {
                         <td><a href="#" class="note-link">SSH Key Management</a></td>
                         <td><span class="category-link">Security</span></td>
                     </tr>
-                    <tr>
-                        <td>2025-08-24</td>
-                        <td><a href="#" class="note-link">Python Web Scraping Tutorial</a></td>
-                        <td><span class="category-link">Scripts</span></td>
-                    </tr>
-                    <tr>
-                        <td>2025-08-23</td>
-                        <td><a href="#" class="note-link">DNS Configuration and Troubleshooting</a></td>
-                        <td><span class="category-link">Networking</span></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -335,10 +327,30 @@ body {
                         <td><a href="#" class="note-link">Home Network Setup</a></td>
                         <td><span class="category-link">Networking</span></td>
                     </tr>
-                    <tr>
-                        <td>2025-08-26</td>
-                        <td><a href="#" class="note-link">MySQL Database Setup</a></td>
-                        <td><span class="category-link">Database</span></td>
-                    </tr>
-                    <tr>
-                        <td>2025-08-25</td
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+// Show debug header if ?debug=1
+const params = new URLSearchParams(window.location.search);
+if (params.get("debug") === "1") {
+    document.getElementById("debug-header").style.display = "block";
+}
+
+// Toggle views
+function showView(view) {
+    document.getElementById("desktop-view").classList.remove("active");
+    document.getElementById("mobile-view").classList.remove("active");
+    document.getElementById(view + "-view").classList.add("active");
+
+    // Toggle button styles
+    document.getElementById("desktop-btn").classList.remove("active");
+    document.getElementById("mobile-btn").classList.remove("active");
+    document.getElementById(view + "-btn").classList.add("active");
+}
+</script>
+</body>
+</html>
