@@ -3,354 +3,366 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Notes - Tech Notes</title>
+<title>Updated Desktop vs Mobile Preview</title>
 <style>
-/* ======================================
-    1. PAGE STYLING
-    ====================================== */
 body {
-    font-family: monospace;
-    background: #000;
-    color: #0f0;
-    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
     margin: 0;
+    padding: 20px;
 }
 
-/* Centered page container so columns don't stretch to the page edge */
-.main {
-    max-width: 980px;   /* change this number to widen/narrow the content area */
-    margin: 0 auto;
-    padding: 0 16px;
-    box-sizing: border-box;
-}
-
-/* ======================================
-    2. HEADER
-    ====================================== */
-.header-container {
+.demo-header {
     text-align: center;
-    margin-bottom: 30px;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
 }
 
-.header-container h1 {
-    margin: 0;
+.demo-header h1 {
+    margin: 0 0 15px 0;
+    color: #333;
     font-size: 24px;
 }
 
-.header-container nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #0f0;
-    font-weight: bold;
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-/* ======================================
-    3. SEARCH BAR STYLING
-    ====================================== */
-.search-container {
-    margin: 0 auto 20px;
-    text-align: center;
-    max-width: 600px;
+.toggle-btn {
+    padding: 12px 25px;
+    border: 2px solid #007acc;
+    background: white;
+    color: #007acc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
 }
-#search-input {
-    font-family: monospace;
+
+.toggle-btn.active {
+    background: #007acc;
+    color: white;
+}
+
+.toggle-btn:hover {
+    background: #005a9f;
+    color: white;
+}
+
+.demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.view-frame {
+    width: 100%;
+    background: #000;
+    color: #0f0;
+    font-family: 'Courier New', Consolas, monospace;
+    transition: all 0.3s ease;
+}
+
+.desktop-view {
+    padding: 30px;
+    font-size: 14px;
+    line-height: 1.4;
+    min-height: 550px;
+}
+
+.mobile-view {
+    padding: 15px;
+    font-size: 9px;
+    line-height: 1.2;
+    min-height: 550px;
+    max-width: 320px;
+    margin: 0 auto;
+    border-left: 4px solid #333;
+    border-right: 4px solid #333;
+    position: relative;
+}
+
+.mobile-view::before {
+    content: "📱 Mobile (320px wide)";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+}
+
+.view-content {
+    display: none;
+}
+
+.view-content.active {
+    display: block;
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    font-family: 'Courier New', Consolas, monospace;
     background: #000;
     color: #0f0;
     border: 1px solid #0f0;
-    padding: 12px 16px;
-    width: 300px;
-    max-width: 100%;
-    font-size: 16px;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-/* ======================================
-    4. NOTES LIST
-    ====================================== */
-.notes-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.desktop-view .search-input {
+    width: 400px;
+    max-width: 80%;
+    font-size: 16px;
+    padding: 12px 16px;
 }
 
-/* Each note row: use flex with gap for predictable spacing */
-.note-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;            /* consistent spacing between columns */
-    margin-bottom: 8px;
-    line-height: 1.4;
-    padding: 6px 0;
+.mobile-view .search-input {
+    width: 95%;
+    font-size: 14px;
+    padding: 10px 12px;
 }
 
-/* remove the old global nowrap / margin rules and control per-column behavior below */
-
-/* Date column: fixed width, never wraps */
-.note-date {
-    flex: 0 0 120px;
-    white-space: nowrap;
-    font-size: 13px;
-    color: #888;
+.controls {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-/* Title column: flexible, will ellipsis if too long on wide screens */
-.note-title {
-    flex: 1 1 auto;
-    min-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-decoration: none;
+.sort-btn {
+    background: #000;
     color: #0f0;
-    display: inline-block; /* needed for ellipsis to work reliably */
-}
-
-/* Category column: fixed width and left-aligned so it sits close to the title */
-.note-category {
-    flex: 0 0 150px;
-    text-align: left;
-    white-space: nowrap;
-    font-size: 13px;
-}
-
-/* Category link */
-.note-category a {
-    color: #0f0;
-    text-decoration: none;
+    border: 1px solid #0f0;
     cursor: pointer;
-    padding: 2px 6px;
+    font-family: monospace;
     border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+    color: #ff0;
+    border-color: #ff0;
+}
+
+.desktop-view .sort-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 13px;
     display: inline-block;
 }
 
-/* Sort link above category column */
-.sort-link {
+.mobile-view .sort-btn {
+    padding: 12px;
+    margin: 5px auto;
+    font-size: 12px;
+    display: block;
+    width: 85%;
+}
+
+.sql-table {
+    font-family: 'Courier New', Consolas, monospace;
+    white-space: pre;
+    color: #0f0;
+}
+
+.desktop-view .sql-table {
+    font-size: 14px;
+    overflow-x: auto;
+}
+
+.mobile-view .sql-table {
+    font-size: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    border: 1px solid #333;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.note-link {
+    color: #0f0;
+    text-decoration: none;
+}
+
+.note-link:hover {
+    color: #ff0;
+    text-decoration: underline;
+}
+
+.category-link {
+    color: #0f0;
+    text-decoration: none;
     cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 4px;
-    display: inline-block;
 }
 
-/* Hover effects */
-.note-title:hover,
-.note-category a:hover,
-.sort-link:hover {
+.category-link:hover {
     color: #ff0;
 }
 
-/* ======================================
-    COLUMN HEADERS
-    ====================================== */
-.column-headers {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-    font-weight: bold;
+.info-panel {
+    background: #e8f4ff;
+    border: 2px solid #007acc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px auto;
+    max-width: 700px;
 }
 
-.column-headers .note-date {
-    flex: 0 0 120px;
+.info-panel h3 {
+    margin-top: 0;
+    color: #005a9f;
+    font-size: 18px;
 }
 
-.column-headers .note-title {
-    flex: 1 1 auto;
-    min-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.scroll-hint {
+    text-align: center;
+    background: #ffffcc;
+    border: 1px solid #ffd700;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #b8860b;
+    display: none;
 }
 
-.column-headers .note-category {
-    flex: 0 0 150px;
-    text-align: left;
+.mobile-view .scroll-hint {
+    display: block;
 }
 
-/* ======================================
-    5. MOBILE IMPROVEMENTS
-    ====================================== */
-@media (max-width: 600px) {
-    body {
-        padding: 20px 15px;
-    }
-
-    .main {
-        padding: 0 8px;
-    }
-    
-    .header-container h1 {
-        font-size: 20px;
-    }
-    
-    .header-container nav a {
-        display: inline-block;
-        margin: 5px 8px;
-        padding: 8px 12px;
-        border: 1px solid #0f0;
-        border-radius: 4px;
-        min-height: 44px;
-        box-sizing: border-box;
-    }
-    
-    .note-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        padding: 10px 0;
-        border-bottom: 1px solid #111;
-    }
-    
-    .note-date {
-        font-size: 12px;
-        margin-bottom: 0;
-        color: #888;
-        flex: none;
-    }
-    
-    .note-title {
-        font-size: 16px;
-        white-space: normal;      /* allow wrapping on small screens */
-        overflow: visible;
-        text-overflow: initial;
-        min-width: 0;
-        margin-bottom: 4px;
-    }
-    
-    .note-category {
-        margin-bottom: 0;
-        text-align: left;
-        flex: none;
-    }
-    
-    .note-category a {
-        padding: 4px 8px;
-        border: 1px solid #0f0;
-        border-radius: 4px;
-        font-size: 12px;
-        min-height: 32px;
-        box-sizing: border-box;
-    }
-    
-    .sort-link {
-        font-size: 14px;
-        padding: 10px 16px;
-        margin-bottom: 8px;
-    }
-
-    /* Hide column headers on mobile */
-    .column-headers {
-        display: none;
-    }
+.feature-highlight {
+    background: #f0fff0;
+    border-left: 4px solid #28a745;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 5px 5px 0;
 }
 </style>
 </head>
 <body>
 
-<div class="main">
+<div class="demo-header">
+    <h1>🖥️ Desktop vs 📱 Mobile Preview</h1>
+    <p><strong>Your SQL-style notes page with simplified controls</strong></p>
     
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search notes...">
+    <div class="view-toggle">
+        <button class="toggle-btn active" onclick="showView('desktop')">🖥️ Desktop View</button>
+        <button class="toggle-btn" onclick="showView('mobile')">📱 Mobile View</button>
+    </div>
+</div>
+
+<div class="demo-container">
+    <!-- Desktop View -->
+    <div id="desktop-view" class="view-content active">
+        <div class="view-frame desktop-view">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search notes...">
+            </div>
+
+            <div class="controls">
+                <button class="sort-btn">Sort by Category ▼</button>
+                <button class="sort-btn">Show All</button>
+            </div>
+
+            <div class="sql-table">+-------------+--------------------------------------------------+----------+
+| Date        | Title                                            | Category |
++-------------+--------------------------------------------------+----------+
+| 2025-08-27  | <a href="#" class="note-link">Installing OpenBSD</a>                           | <span class="category-link">Software</span>  |
+| 2025-08-27  | <a href="#" class="note-link">Welcome to Tech Notes</a>                     | <span class="category-link">Software</span>  |
+| 2025-08-27  | <a href="#" class="note-link">Bash Scripting Basics</a>                     | <span class="category-link">Scripts</span>   |
+| 2025-08-27  | <a href="#" class="note-link">Home Network Setup</a>                         | <span class="category-link">Networking</span>|
+| 2025-08-26  | <a href="#" class="note-link">MySQL Database Setup</a>                        | <span class="category-link">Database</span> |
+| 2025-08-25  | <a href="#" class="note-link">SSH Key Management</a>                         | <span class="category-link">Security</span> |
+| 2025-08-24  | <a href="#" class="note-link">Python Web Scraping Tutorial</a>                | <span class="category-link">Scripts</span>   |
+| 2025-08-23  | <a href="#" class="note-link">DNS Configuration and Troubleshooting</a>         | <span class="category-link">Networking</span>|
++-------------+--------------------------------------------------+----------+</div>
+        </div>
     </div>
 
-    <div class="column-headers" aria-hidden="true">
-        <span class="note-date">Date</span>
-        <span class="note-title">Title</span>
-        <span class="note-category">
-            <span class="sort-link" id="category-sort">Sort by Category ▼</span>
-        </span>
-    </div>
+    <!-- Mobile View -->
+    <div id="mobile-view" class="view-content">
+        <div class="view-frame mobile-view">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search notes...">
+            </div>
 
-    <ul class="notes-list">
-        <li class="note-item" data-category="Software" data-labels="install,openbsd,tutorial">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/installing-openbsd.html" class="note-title">Installing OpenBSD</a>
-            <span class="note-category">
-                <a data-category="Software">Software</a>
-            </span>
-        </li>
-        <li class="note-item" data-category="Software" data-labels="intro,overview">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/welcome-to-tech-notes.html" class="note-title">Welcome to Tech Notes</a>
-            <span class="note-category">
-                <a data-category="Software">Software</a>
-            </span>
-        </li>
-        <li class="note-item" data-category="Scripts" data-labels="bash,scripting,automation">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/bash-basics.html" class="note-title">Bash Scripting Basics</a>
-            <span class="note-category">
-                <a data-category="Scripts">Scripts</a>
-            </span>
-        </li>
-        <li class="note-item" data-category="Networking" data-labels="networking,router,security">
-            <span class="note-date">2025-08-27</span>
-            <a href="notes/home-network-setup.html" class="note-title">Home Network Setup</a>
-            <span class="note-category">
-                <a data-category="Networking">Networking</a>
-            </span>
-        </li>
+            <div class="controls">
+                <button class="sort-btn">Sort by Category ▼</button>
+                <button class="sort-btn">Show All</button>
+            </div>
+
+            <div class="scroll-hint">👈👉 Swipe left/right on the table below to see all columns</div>
+
+            <div class="sql-table">+-------------+--------------------------------------------------+----------+
+| Date        | Title                                            | Category |
++-------------+--------------------------------------------------+----------+
+| 2025-08-27  | <a href="#" class="note-link">Installing OpenBSD</a>                           | <span class="category-link">Software</span>  |
+| 2025-08-27  | <a href="#" class="note-link">Welcome to Tech Notes</a>                     | <span class="category-link">Software</span>  |
+| 2025-08-27  | <a href="#" class="note-link">Bash Scripting Basics</a>                     | <span class="category-link">Scripts</span>   |
+| 2025-08-27  | <a href="#" class="note-link">Home Network Setup</a>                         | <span class="category-link">Networking</span>|
+| 2025-08-26  | <a href="#" class="note-link">MySQL Database Setup</a>                        | <span class="category-link">Database</span> |
+| 2025-08-25  | <a href="#" class="note-link">SSH Key Management</a>                         | <span class="category-link">Security</span> |
+| 2025-08-24  | <a href="#" class="note-link">Python Web Scraping Tutorial</a>                | <span class="category-link">Scripts</span>   |
+| 2025-08-23  | <a href="#" class="note-link">DNS Configuration and Troubleshooting</a>         | <span class="category-link">Networking</span>|
++-------------+--------------------------------------------------+----------+</div>
+        </div>
+    </div>
+</div>
+
+<div class="info-panel">
+    <h3>📋 What You're Seeing:</h3>
+    
+    <div class="feature-highlight">
+        <strong>✨ Simplified Controls:</strong> Only 2 buttons now - "Sort by Category" and "Show All"
+    </div>
+    
+    <ul style="font-size: 16px; line-height: 1.6;">
+        <li><strong>🖥️ Desktop:</strong> Full-width table, comfortable spacing, buttons side-by-side</li>
+        <li><strong>📱 Mobile:</strong> Narrow phone frame (320px), smaller text, buttons stacked vertically</li>
+        <li><strong>🔄 Sort by Category:</strong> Click to toggle between A-Z and Z-A sorting (arrow shows direction)</li>
+        <li><strong>🔍 Search:</strong> Type to filter notes by title, category, or date</li>
+        <li><strong>👆 Category Links:</strong> Click any category name in the table to filter by that type</li>
+        <li><strong>📱 Mobile Scroll:</strong> Swipe left/right on mobile to see all table columns</li>
     </ul>
 </div>
 
 <script>
-const notes = Array.from(document.querySelectorAll('.note-item'));
-
-// Search functionality
-document.getElementById('search-input').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase().trim();
+function showView(viewType) {
+    // Hide all views
+    document.querySelectorAll('.view-content').forEach(view => {
+        view.classList.remove('active');
+    });
     
-    notes.forEach(note => {
-        const title = note.querySelector('.note-title').textContent.toLowerCase();
-        const category = note.dataset.category.toLowerCase();
-        const labels = note.dataset.labels.toLowerCase();
-        const date = note.querySelector('.note-date').textContent.toLowerCase();
-        
-        // Search across title, category, labels, and date
-        const isMatch = !searchTerm ||
-                        title.includes(searchTerm) || 
-                        category.includes(searchTerm) || 
-                        labels.includes(searchTerm) || 
-                        date.includes(searchTerm);
-        
-        note.style.display = isMatch ? '' : 'none';
+    // Remove active class from all buttons
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
     });
-});
-
-// Filter by category (clicking a category link)
-document.querySelectorAll('.note-category a').forEach(cat => {
-    cat.addEventListener('click', e => {
-        const value = e.target.dataset.category;
-        notes.forEach(note => {
-            note.style.display = (note.dataset.category === value) ? '' : 'none';
-        });
-    });
-});
-
-// Single sort button for categories
-let sortAscending = true;
-
-document.getElementById('category-sort').addEventListener('click', () => {
-    // Toggle sort direction
-    sortAscending = !sortAscending;
     
-    // Update sort button display
-    const sortButton = document.getElementById('category-sort');
-    sortButton.textContent = sortAscending ? 'Sort by Category ▲' : 'Sort by Category ▼';
-
-    // Sort all notes by category
-    const sortedNotes = notes.slice().sort((a, b) => {
-        const catA = a.dataset.category.toUpperCase();
-        const catB = b.dataset.category.toUpperCase();
-        if (catA === catB) return 0;
-        return sortAscending ? (catA < catB ? -1 : 1) : (catA > catB ? -1 : 1);
-    });
-
-    // Re-render the sorted list
-    const list = document.querySelector('.notes-list');
-    list.innerHTML = '';
-    sortedNotes.forEach(n => list.appendChild(n));
-});
+    // Show selected view
+    document.getElementById(viewType + '-view').classList.add('active');
+    
+    // Activate corresponding button
+    event.target.classList.add('active');
+}
 </script>
 
 </body>
