@@ -72,20 +72,49 @@ body {
     color: #0f0;
     font-family: 'Courier New', Consolas, monospace;
     transition: all 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
-.desktop-view {
-    padding: 30px;
-    font-size: 14px;
-    line-height: 1.4;
-    min-height: 550px;
+/* Desktop & Mobile Table Styles */
+.sql-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sql-table th, .sql-table td {
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 1px solid #0f0;
+    font-family: 'Courier New', Consolas, monospace;
+}
+
+.sql-table th {
+    background: #111;
+    color: #0ff;
+}
+
+.note-link {
+    color: #0f0;
+    text-decoration: none;
+}
+
+.note-link:hover {
+    color: #ff0;
+    text-decoration: underline;
+}
+
+.category-link {
+    color: #0f0;
+    cursor: pointer;
+}
+
+.category-link:hover {
+    color: #ff0;
 }
 
 .mobile-view {
-    padding: 15px;
-    font-size: 9px;
-    line-height: 1.2;
-    min-height: 550px;
     max-width: 320px;
     margin: 0 auto;
     border-left: 4px solid #333;
@@ -117,7 +146,7 @@ body {
 
 .search-container {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .search-input {
@@ -126,25 +155,14 @@ body {
     color: #0f0;
     border: 1px solid #0f0;
     border-radius: 4px;
+    padding: 8px 12px;
+    width: 80%;
     box-sizing: border-box;
-}
-
-.desktop-view .search-input {
-    width: 400px;
-    max-width: 80%;
-    font-size: 16px;
-    padding: 12px 16px;
-}
-
-.mobile-view .search-input {
-    width: 95%;
-    font-size: 14px;
-    padding: 10px 12px;
 }
 
 .controls {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .sort-btn {
@@ -154,83 +172,13 @@ body {
     cursor: pointer;
     font-family: monospace;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    padding: 8px 16px;
+    margin: 0 5px;
 }
 
 .sort-btn:hover {
     color: #ff0;
     border-color: #ff0;
-}
-
-.desktop-view .sort-btn {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 13px;
-    display: inline-block;
-}
-
-.mobile-view .sort-btn {
-    padding: 12px;
-    margin: 5px auto;
-    font-size: 12px;
-    display: block;
-    width: 85%;
-}
-
-.sql-table {
-    font-family: 'Courier New', Consolas, monospace;
-    white-space: pre;
-    color: #0f0;
-}
-
-.desktop-view .sql-table {
-    font-size: 14px;
-    overflow-x: auto;
-}
-
-.mobile-view .sql-table {
-    font-size: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 10px;
-    border: 1px solid #333;
-    padding: 5px;
-    border-radius: 3px;
-}
-
-.note-link {
-    color: #0f0;
-    text-decoration: none;
-}
-
-.note-link:hover {
-    color: #ff0;
-    text-decoration: underline;
-}
-
-.category-link {
-    color: #0f0;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.category-link:hover {
-    color: #ff0;
-}
-
-.info-panel {
-    background: #e8f4ff;
-    border: 2px solid #007acc;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 25px auto;
-    max-width: 700px;
-}
-
-.info-panel h3 {
-    margin-top: 0;
-    color: #005a9f;
-    font-size: 18px;
 }
 
 .scroll-hint {
@@ -249,12 +197,19 @@ body {
     display: block;
 }
 
-.feature-highlight {
-    background: #f0fff0;
-    border-left: 4px solid #28a745;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 0 5px 5px 0;
+.info-panel {
+    background: #e8f4ff;
+    border: 2px solid #007acc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px auto;
+    max-width: 700px;
+}
+
+.info-panel h3 {
+    margin-top: 0;
+    color: #005a9f;
+    font-size: 18px;
 }
 </style>
 </head>
@@ -283,18 +238,57 @@ body {
                 <button class="sort-btn">Show All</button>
             </div>
 
-            <div class="sql-table">+-------------+--------------------------------------------------+----------+
-| Date        | Title                                            | Category |
-+-------------+--------------------------------------------------+----------+
-| 2025-08-27  | <a href="#" class="note-link">Installing OpenBSD</a>                           | <span class="category-link">Software</span>  |
-| 2025-08-27  | <a href="#" class="note-link">Welcome to Tech Notes</a>                     | <span class="category-link">Software</span>  |
-| 2025-08-27  | <a href="#" class="note-link">Bash Scripting Basics</a>                     | <span class="category-link">Scripts</span>   |
-| 2025-08-27  | <a href="#" class="note-link">Home Network Setup</a>                         | <span class="category-link">Networking</span>|
-| 2025-08-26  | <a href="#" class="note-link">MySQL Database Setup</a>                        | <span class="category-link">Database</span> |
-| 2025-08-25  | <a href="#" class="note-link">SSH Key Management</a>                         | <span class="category-link">Security</span> |
-| 2025-08-24  | <a href="#" class="note-link">Python Web Scraping Tutorial</a>                | <span class="category-link">Scripts</span>   |
-| 2025-08-23  | <a href="#" class="note-link">DNS Configuration and Troubleshooting</a>         | <span class="category-link">Networking</span>|
-+-------------+--------------------------------------------------+----------+</div>
+            <table class="sql-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Installing OpenBSD</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Welcome to Tech Notes</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Bash Scripting Basics</a></td>
+                        <td><span class="category-link">Scripts</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Home Network Setup</a></td>
+                        <td><span class="category-link">Networking</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-26</td>
+                        <td><a href="#" class="note-link">MySQL Database Setup</a></td>
+                        <td><span class="category-link">Database</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-25</td>
+                        <td><a href="#" class="note-link">SSH Key Management</a></td>
+                        <td><span class="category-link">Security</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-24</td>
+                        <td><a href="#" class="note-link">Python Web Scraping Tutorial</a></td>
+                        <td><span class="category-link">Scripts</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-23</td>
+                        <td><a href="#" class="note-link">DNS Configuration and Troubleshooting</a></td>
+                        <td><span class="category-link">Networking</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -312,58 +306,39 @@ body {
 
             <div class="scroll-hint">👈👉 Swipe left/right on the table below to see all columns</div>
 
-            <div class="sql-table">+-------------+--------------------------------------------------+----------+
-| Date        | Title                                            | Category |
-+-------------+--------------------------------------------------+----------+
-| 2025-08-27  | <a href="#" class="note-link">Installing OpenBSD</a>                           | <span class="category-link">Software</span>  |
-| 2025-08-27  | <a href="#" class="note-link">Welcome to Tech Notes</a>                     | <span class="category-link">Software</span>  |
-| 2025-08-27  | <a href="#" class="note-link">Bash Scripting Basics</a>                     | <span class="category-link">Scripts</span>   |
-| 2025-08-27  | <a href="#" class="note-link">Home Network Setup</a>                         | <span class="category-link">Networking</span>|
-| 2025-08-26  | <a href="#" class="note-link">MySQL Database Setup</a>                        | <span class="category-link">Database</span> |
-| 2025-08-25  | <a href="#" class="note-link">SSH Key Management</a>                         | <span class="category-link">Security</span> |
-| 2025-08-24  | <a href="#" class="note-link">Python Web Scraping Tutorial</a>                | <span class="category-link">Scripts</span>   |
-| 2025-08-23  | <a href="#" class="note-link">DNS Configuration and Troubleshooting</a>         | <span class="category-link">Networking</span>|
-+-------------+--------------------------------------------------+----------+</div>
-        </div>
-    </div>
-</div>
-
-<div class="info-panel">
-    <h3>📋 What You're Seeing:</h3>
-    
-    <div class="feature-highlight">
-        <strong>✨ Simplified Controls:</strong> Only 2 buttons now - "Sort by Category" and "Show All"
-    </div>
-    
-    <ul style="font-size: 16px; line-height: 1.6;">
-        <li><strong>🖥️ Desktop:</strong> Full-width table, comfortable spacing, buttons side-by-side</li>
-        <li><strong>📱 Mobile:</strong> Narrow phone frame (320px), smaller text, buttons stacked vertically</li>
-        <li><strong>🔄 Sort by Category:</strong> Click to toggle between A-Z and Z-A sorting (arrow shows direction)</li>
-        <li><strong>🔍 Search:</strong> Type to filter notes by title, category, or date</li>
-        <li><strong>👆 Category Links:</strong> Click any category name in the table to filter by that type</li>
-        <li><strong>📱 Mobile Scroll:</strong> Swipe left/right on mobile to see all table columns</li>
-    </ul>
-</div>
-
-<script>
-function showView(viewType) {
-    // Hide all views
-    document.querySelectorAll('.view-content').forEach(view => {
-        view.classList.remove('active');
-    });
-    
-    // Remove active class from all buttons
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Show selected view
-    document.getElementById(viewType + '-view').classList.add('active');
-    
-    // Activate corresponding button
-    event.target.classList.add('active');
-}
-</script>
-
-</body>
-</html>
+            <table class="sql-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Installing OpenBSD</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Welcome to Tech Notes</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Bash Scripting Basics</a></td>
+                        <td><span class="category-link">Scripts</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Home Network Setup</a></td>
+                        <td><span class="category-link">Networking</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-26</td>
+                        <td><a href="#" class="note-link">MySQL Database Setup</a></td>
+                        <td><span class="category-link">Database</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-25</td
