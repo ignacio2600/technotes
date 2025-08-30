@@ -1,211 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Notes</title>
-    <style>
-        /* ======================================
-           0. GLOBAL STYLING
-        ====================================== */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #f0f0f0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Updated Desktop vs Mobile Preview</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
 
-        a {
-            text-decoration: none;
-        }
+/* Debug header */
+.demo-header {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
 
-        /* ======================================
-           1. HEADER STYLING
-        ====================================== */
-        header {
-            position: sticky;
-            top: 0;
-            background-color: #111;
-            padding: 20px 40px;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5); /* subtle separation */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.demo-header h1 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 24px;
+}
 
-        header h1 {
-            margin: 0 0 10px 0;
-        }
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-        nav {
-            display: flex;
-            gap: 20px;
-        }
+.toggle-btn {
+    padding: 12px 25px;
+    border: 2px solid #007acc;
+    background: white;
+    color: #007acc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
 
-        nav a {
-            color: #00ffaa;
-            font-weight: bold;
-        }
+.toggle-btn.active {
+    background: #007acc;
+    color: white;
+}
 
-        nav a.active {
-            text-decoration: underline;
-        }
+.toggle-btn:hover {
+    background: #005a9f;
+    color: white;
+}
 
-        /* ======================================
-           2. MAIN SPACING
-        ====================================== */
-        main {
-            padding: 60px 20px 40px 20px; /* top padding pushes content below header */
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
 
-        /* ======================================
-           3. ARTICLES GRID
-        ====================================== */
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+.view-frame {
+    width: 100%;
+    background: #000;
+    color: #0f0;
+    font-family: 'Courier New', Consolas, monospace;
+    transition: all 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
 
-        /* ======================================
-           4. CARD STYLING
-        ====================================== */
-        .card {
-            background-color: #1a1a1a;
-            color: #f0f0f0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
-            padding-bottom: 15px;
-        }
+/* Desktop & Mobile Table Styles */
+.sql-table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        .card img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
+.sql-table th, .sql-table td {
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 1px solid #0f0;
+    font-family: 'Courier New', Consolas, monospace;
+}
 
-        .card h2 {
-            font-size: 1.3rem;
-            margin: 15px;
-        }
+.sql-table th {
+    background: #111;
+    color: #0ff;
+}
 
-        .card p {
-            font-size: 1rem;
-            margin: 0 15px 15px 15px;
-            line-height: 1.5;
-        }
+.note-link {
+    color: #0f0;
+    text-decoration: none;
+}
 
-        .card a {
-            color: #00ffaa;
-            font-weight: bold;
-            margin: 0 15px 15px 15px;
-        }
+.note-link:hover {
+    color: #ff0;
+    text-decoration: underline;
+}
 
-        /* subtle hover effect */
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
+.category-link {
+    color: #0f0;
+    cursor: pointer;
+}
 
-        /* ======================================
-           5. FOOTER
-        ====================================== */
-        footer {
-            background-color: #111;
-            color: #ccc;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
+.category-link:hover {
+    color: #ff0;
+}
 
-        footer a {
-            color: #00ffaa;
-            margin: 0 15px;
-        }
+.mobile-view {
+    max-width: 320px;
+    margin: 0 auto;
+    border-left: 4px solid #333;
+    border-right: 4px solid #333;
+    position: relative;
+}
 
-        /* ======================================
-           6. RESPONSIVE ADJUSTMENTS
-        ====================================== */
-        @media (max-width: 600px) {
-            .card h2 {
-                font-size: 1.1rem;
-            }
-            .card p {
-                font-size: 0.95rem;
-            }
+.mobile-view::before {
+    content: "📱 Mobile (320px wide)";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+}
 
-            header {
-                padding: 20px;
-            }
+.view-content {
+    display: none;
+}
 
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
+.view-content.active {
+    display: block;
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    font-family: 'Courier New', Consolas, monospace;
+    background: #000;
+    color: #0f0;
+    border: 1px solid #0f0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sort-btn {
+    background: #000;
+    color: #0f0;
+    border: 1px solid #0f0;
+    cursor: pointer;
+    font-family: monospace;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin: 0 5px;
+}
+
+.sort-btn:hover {
+    color: #ff0;
+    border-color: #ff0;
+}
+
+.scroll-hint {
+    text-align: center;
+    background: #ffffcc;
+    border: 1px solid #ffd700;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #b8860b;
+    display: none;
+}
+
+.mobile-view .scroll-hint {
+    display: block;
+}
+
+.info-panel {
+    background: #e8f4ff;
+    border: 2px solid #007acc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px auto;
+    max-width: 700px;
+}
+
+.info-panel h3 {
+    margin-top: 0;
+    color: #005a9f;
+    font-size: 18px;
+}
+</style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <h1>Tech Notes</h1>
-        <nav>
-            <a href="index.html" class="active">News</a>
-            <a href="notes.html">Notes</a>
-            <a href="contact.html">Reviews</a>
-        </nav>
-    </header>
+<!-- Debug Header (hidden unless ?debug=1) -->
+<div id="debug-header" class="demo-header" style="display:none;">
+    <h1>🖥️ Desktop vs 📱 Mobile Preview</h1>
+    <p><strong>Your SQL-style notes page with simplified controls</strong></p>
+    
+    <div class="view-toggle">
+        <button id="desktop-btn" class="toggle-btn active" onclick="showView('desktop')">🖥️ Desktop View</button>
+        <button id="mobile-btn" class="toggle-btn" onclick="showView('mobile')">📱 Mobile View</button>
+    </div>
+</div>
 
-    <!-- MAIN CONTENT -->
-    <main>
-        <div class="articles-grid">
-            <article class="card">
-                <img src="https://via.placeholder.com/400x200" alt="Story image">
-                <h2>Article Title 1</h2>
-                <p>Short description of the story. Quick preview to entice readers.</p>
-                <a href="#">Read more</a>
-            </article>
+<div class="demo-container">
+    <!-- Desktop View -->
+    <div id="desktop-view" class="view-content active">
+        <div class="view-frame desktop-view">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search notes...">
+            </div>
 
-            <article class="card">
-                <img src="https://via.placeholder.com/400x200" alt="Story image">
-                <h2>Article Title 2</h2>
-                <p>Short description of the story. Quick preview to entice readers.</p>
-                <a href="#">Read more</a>
-            </article>
+            <div class="controls">
+                <button class="sort-btn">Sort by Category ▼</button>
+                <button class="sort-btn">Show All</button>
+            </div>
 
-            <article class="card">
-                <img src="https://via.placeholder.com/400x200" alt="Story image">
-                <h2>Article Title 3</h2>
-                <p>Short description of the story. Quick preview to entice readers.</p>
-                <a href="#">Read more</a>
-            </article>
-
-            <article class="card">
-                <img src="https://via.placeholder.com/400x200" alt="Story image">
-                <h2>Article Title 4</h2>
-                <p>Short description of the story. Quick preview to entice readers.</p>
-                <a href="#">Read more</a>
-            </article>
+            <table class="sql-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Installing OpenBSD</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Welcome to Tech Notes</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Bash Scripting Basics</a></td>
+                        <td><span class="category-link">Scripts</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Home Network Setup</a></td>
+                        <td><span class="category-link">Networking</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-26</td>
+                        <td><a href="#" class="note-link">MySQL Database Setup</a></td>
+                        <td><span class="category-link">Database</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-25</td>
+                        <td><a href="#" class="note-link">SSH Key Management</a></td>
+                        <td><span class="category-link">Security</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </main>
+    </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-links">
-            <a href="about.html">About</a>
-        </div>
-        <div class="footer-credit">
-            © 2025 Tech Notes
-        </div>
-    </footer>
+    <!-- Mobile View -->
+    <div id="mobile-view" class="view-content">
+        <div class="view-frame mobile-view">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search notes...">
+            </div>
 
+            <div class="controls">
+                <button class="sort-btn">Sort by Category ▼</button>
+                <button class="sort-btn">Show All</button>
+            </div>
+
+            <div class="scroll-hint">👈👉 Swipe left/right on the table below to see all columns</div>
+
+            <table class="sql-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Installing OpenBSD</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Welcome to Tech Notes</a></td>
+                        <td><span class="category-link">Software</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Bash Scripting Basics</a></td>
+                        <td><span class="category-link">Scripts</span></td>
+                    </tr>
+                    <tr>
+                        <td>2025-08-27</td>
+                        <td><a href="#" class="note-link">Home Network Setup</a></td>
+                        <td><span class="category-link">Networking</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+// Show debug header if ?debug=1
+const params = new URLSearchParams(window.location.search);
+if (params.get("debug") === "1") {
+    document.getElementById("debug-header").style.display = "block";
+}
+
+// Toggle views
+function showView(view) {
+    document.getElementById("desktop-view").classList.remove("active");
+    document.getElementById("mobile-view").classList.remove("active");
+    document.getElementById(view + "-view").classList.add("active");
+
+    // Toggle button styles
+    document.getElementById("desktop-btn").classList.remove("active");
+    document.getElementById("mobile-btn").classList.remove("active");
+    document.getElementById(view + "-btn").classList.add("active");
+}
+</script>
 </body>
 </html>
