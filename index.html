@@ -1,23 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Notes Website</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <h1>My Notes Website</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="notes.html">Notes</a>
-    </nav>
-  </header>
+/* ======================================
+   0. HEADER STYLING
+   ====================================== */
+header {
+    position: sticky; /* keeps header visible when scrolling */
+    top: 0;
+    background-color: #111;
+    padding: 20px 40px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5); /* subtle separation */
+}
 
-  <main>
-    <h2>Welcome</h2>
-    <p>Explore my notes on technology, networking, security, and more.</p>
-  </main>
-</body>
-</html>
+/* ======================================
+   1. MAIN SPACING
+   ====================================== */
+main {
+    padding: 60px 20px 40px 20px; /* top padding pushes content below header */
+}
+
+/* ======================================
+   2. ARTICLES GRID
+   ====================================== */
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 0; /* grid padding handled by main */
+}
+
+/* ======================================
+   3. CARD STYLING
+   ====================================== */
+.card {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding-bottom: 15px;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    margin: 15px;
+}
+
+.card p {
+    font-size: 1rem;
+    margin: 0 15px 15px 15px;
+    line-height: 1.5;
+}
+
+.card a {
+    text-decoration: none;
+    color: #00ffaa;
+    font-weight: bold;
+    margin: 0 15px 15px 15px;
+}
+
+/* subtle hover effect */
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ======================================
+   4. RESPONSIVE ADJUSTMENTS
+   ====================================== */
+@media (max-width: 600px) {
+    .card h2 {
+        font-size: 1.1rem;
+    }
+    .card p {
+        font-size: 0.95rem;
+    }
+}
